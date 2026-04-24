@@ -70,10 +70,8 @@
   <section class="about section" id="about">
     <div class="container">
       <div class="about__grid">
-        <div class="about__image-wrap">
-          <img src="images/headshot.jpg" alt="G-Su Paek" class="about__headshot" />
-          <div class="about__image-accent"></div>
-        </div>
+
+        <!-- Col 1: Text -->
         <div class="about__text">
           <p class="section__label">About</p>
           <h2 class="section__title">The Man.<br>The Moment.<br>The Mayhem.</h2>
@@ -84,10 +82,66 @@
             With a background spanning long-form improv, sketch comedy, and dramatic performance, G-Su brings a fearless blend of vulnerability, wit, and raw energy to every role. His work lives in the space where truth meets absurdity — and that's exactly where the best stuff happens.
           </p>
           <p class="about__bio">
-            Based in [City], G-Su performs regularly with top improv troupes and continues to build a body of work on screen that is as unpredictable as it is compelling.
+            Based in Austin, TX, G-Su performs regularly with some of the best troupes in the city and continues to build a body of work on screen that is as unpredictable as it is compelling.
           </p>
           <a href="#contact" class="btn btn--primary btn--sm">Get in Touch</a>
         </div>
+
+        <!-- Col 2: Headshot -->
+        <div class="about__image-wrap">
+          <img src="images/headshot.jpg" alt="G-Su Paek" class="about__headshot" />
+        </div>
+
+        <!-- Col 3: Shows -->
+        <div class="about__shows" id="shows">
+          <p class="section__label">Upcoming Shows</p>
+          <div class="shows__sidebar">
+
+            <div class="show__card">
+              <div class="show__card-date">
+                <span class="show__month">APR</span>
+                <span class="show__day">29</span>
+              </div>
+              <div class="show__card-body">
+                <h4 class="show__card-title">Teenage Dirtbag</h4>
+                <p class="show__card-sub">Nostalgia Fueled Improv Comedy</p>
+                <p class="show__card-meta">Fallout Theater &bull; Austin, TX</p>
+                <p class="show__card-meta">Every Final Wednesday &bull; 8:30 PM</p>
+                <a href="https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277"
+                   target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>
+              </div>
+            </div>
+
+            <div class="show__card">
+              <div class="show__card-date">
+                <span class="show__month">MAY</span>
+                <span class="show__day">01</span>
+              </div>
+              <div class="show__card-body">
+                <h4 class="show__card-title">Y'all We Asian</h4>
+                <p class="show__card-sub">Hot Stories, Hotter Comedy</p>
+                <p class="show__card-meta">Fallout Theater &bull; Austin, TX</p>
+                <p class="show__card-meta">Every 1st Friday &bull; 8:30 PM</p>
+                <a href="https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489"
+                   target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>
+              </div>
+            </div>
+
+            <div class="show__card show__card--tbd">
+              <div class="show__card-date">
+                <span class="show__month">MORE</span>
+                <span class="show__day">+</span>
+              </div>
+              <div class="show__card-body">
+                <h4 class="show__card-title">More Shows Coming</h4>
+                <p class="show__card-meta">Sign up to be the first to know</p>
+                <a href="#contact" class="btn btn--ghost btn--sm">Notify Me</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -149,57 +203,6 @@
     </div>
   </section>
 
-  <!-- SHOWS -->
-  <section class="shows section section--dark" id="shows">
-    <div class="container">
-      <div class="section__header section__header--center">
-        <p class="section__label section__label--light">Live</p>
-        <h2 class="section__title section__title--light">Upcoming Shows</h2>
-      </div>
-      <div class="shows__list">
-        <div class="show__item">
-          <div class="show__date">
-            <span class="show__month">APR</span>
-            <span class="show__day">29</span>
-          </div>
-          <div class="show__info">
-            <h3 class="show__title">Teenage Dirtbag: Nostalgia Fueled Improv Comedy</h3>
-            <p class="show__venue">Fallout Theater &bull; Austin, TX &bull; Every Final Wednesday &bull; 8:30 PM</p>
-          </div>
-          <div class="show__action">
-            <a href="https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277" target="_blank" rel="noopener" class="btn btn--outline btn--sm">Tickets</a>
-          </div>
-        </div>
-        <div class="show__item">
-          <div class="show__date">
-            <span class="show__month">MAY</span>
-            <span class="show__day">01</span>
-          </div>
-          <div class="show__info">
-            <h3 class="show__title">Y'all We Asian: Hot Stories, Hotter Comedy</h3>
-            <p class="show__venue">Fallout Theater &bull; Austin, TX &bull; Every 1st Friday &bull; 8:30 PM</p>
-          </div>
-          <div class="show__action">
-            <a href="https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489" target="_blank" rel="noopener" class="btn btn--outline btn--sm">Tickets</a>
-          </div>
-        </div>
-        <div class="show__item show__item--tbd">
-          <div class="show__date">
-            <span class="show__month">MORE</span>
-            <span class="show__day">+</span>
-          </div>
-          <div class="show__info">
-            <h3 class="show__title">More Shows Coming Soon</h3>
-            <p class="show__venue">Sign up below to be the first to know</p>
-          </div>
-          <div class="show__action">
-            <a href="#contact" class="btn btn--ghost btn--sm">Notify Me</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- PRESS STRIP -->
   <section class="press section">
     <div class="container">
@@ -215,7 +218,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact section section--dark" id="contact">
+  <section class="contact section section--dark contact--photo-bg" id="contact">
     <div class="container">
       <div class="contact__grid">
         <div class="contact__left">
