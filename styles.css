@@ -320,7 +320,7 @@ ul { list-style: none; }
    ============================================ */
 .about__grid {
   display: grid;
-  grid-template-columns: 1fr 320px 1fr;
+  grid-template-columns: 1fr 480px 1fr;
   gap: 52px;
   align-items: start;
 }
@@ -533,6 +533,93 @@ ul { list-style: none; }
   transition: opacity 0.2s;
 }
 .improv__card--linked:hover .improv__card-link { opacity: 1; }
+
+/* ── Thumbnail hover panel ── */
+.improv__card-thumb {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 260px;
+  background: var(--dark-2);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+}
+.improv__card-thumb img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+.improv__card--linked {
+  position: relative;
+  overflow: visible !important;
+}
+.improv__card--linked:hover .improv__card-thumb {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Resume preview (no screenshot, styled card) ── */
+.improv__card-thumb--resume { padding: 0; }
+.resume-preview {
+  padding: 16px;
+  background: var(--dark-2);
+  height: 160px;
+  overflow: hidden;
+}
+.resume-preview__name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.resume-preview__section {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+.resume-preview__credit {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+
+/* ── Newsletter form inside show card ── */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+.newsletter-input {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+}
+.newsletter-input:focus {
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.12);
+}
+.newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+.newsletter-form .btn { width: 100%; justify-content: center; }
 
 /* ============================================
    SHOWS
@@ -788,7 +875,7 @@ ul { list-style: none; }
 @media (max-width: 1024px) {
   .improv__grid { grid-template-columns: repeat(2, 1fr); }
   .about__grid {
-    grid-template-columns: 1fr 270px 1fr;
+    grid-template-columns: 1fr 380px 1fr;
     gap: 36px;
   }
 }
@@ -1022,6 +1109,19 @@ ul { list-style: none; }
 }
 [data-theme="light"] .contact--photo-bg .form__input::placeholder { color: rgba(255,255,255,0.25); }
 [data-theme="light"] .contact--photo-bg .form__select option { background: #1a1a1a; color: #fff; }
+
+/* Newsletter form in light mode (show card is light bg) */
+[data-theme="light"] .newsletter-input {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.15);
+  color: #111;
+}
+[data-theme="light"] .newsletter-input:focus { border-color: var(--accent); }
+[data-theme="light"] .newsletter-input::placeholder { color: rgba(0,0,0,0.3); }
+
+/* Improv card thumbnail — keep dark regardless of theme */
+[data-theme="light"] .improv__card-thumb { background: #1a1a1a; border-color: rgba(0,0,0,0.2); }
+[data-theme="light"] .resume-preview { background: #1a1a1a; }
 
 /* Footer stays dark in both modes */
 [data-theme="light"] .footer { background: #111; }

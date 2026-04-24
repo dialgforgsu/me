@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>G-Su Paek | Actor & Improvisor</title>
-  <meta name="description" content="G-Su Paek — Actor and Improvisor. Bringing raw honesty, big laughs, and electric energy to every stage and screen." />
+  <title>G-Su Paek | Actor & Improviser</title>
+  <meta name="description" content="G-Su Paek — Actor and Improviser. Bringing raw honesty, big laughs, and electric energy to every stage and screen." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet" />
@@ -53,12 +53,12 @@
       <div class="hero__overlay"></div>
     </div>
     <div class="hero__content">
-      <p class="hero__eyebrow">Actor &bull; Improvisor</p>
+      <p class="hero__eyebrow">Actor &bull; Improviser</p>
       <h1 class="hero__name">
         <span class="hero__name-first">G-SU</span>
         <span class="hero__name-last">PAEK</span>
       </h1>
-      <p class="hero__tagline">Unscripted. Unstoppable. Undeniably Real.</p>
+      <p class="hero__tagline">Genuine. Spontaneous. Undeniable.</p>
       <div class="hero__actions">
         <a href="#shows" class="btn btn--primary">Upcoming Shows</a>
         <a href="#reel" class="btn btn--outline">Watch Reel</a>
@@ -79,7 +79,7 @@
           <p class="section__label">About</p>
           <h2 class="section__title">The Man.<br>The Moment.<br>The Mayhem.</h2>
           <p class="about__bio">
-            G-Su Paek is an actor and improvisor whose presence commands any room — whether it's a packed theater, a film set, or a stage lit by nothing but a single spotlight and pure instinct.
+            G-Su Paek is an actor and improviser whose presence commands any room — whether it's a packed theater, a film set, or a stage lit by nothing but a single spotlight and pure instinct.
           </p>
           <p class="about__bio">
             With a background spanning long-form improv, sketch comedy, and dramatic performance, G-Su brings a fearless blend of vulnerability, wit, and raw energy to every role. His work lives in the space where truth meets absurdity — and that's exactly where the best stuff happens.
@@ -151,8 +151,11 @@
               </div>
               <div class="show__card-body">
                 <h4 class="show__card-title">More Shows Coming</h4>
-                <p class="show__card-meta">Sign up to be the first to know</p>
-                <a href="#contact" class="btn btn--ghost btn--sm">Notify Me</a>
+                <p class="show__card-meta">Get notified first — drop your email:</p>
+                <form class="newsletter-form" id="newsletterForm">
+                  <input class="newsletter-input" type="email" placeholder="your@email.com" required />
+                  <button type="submit" class="btn btn--primary btn--sm">Subscribe</button>
+                </form>
               </div>
             </div>
 
@@ -195,6 +198,9 @@
           <h3 class="improv__card-title">Long-Form Improv</h3>
           <p class="improv__card-text">Building full narrative worlds from a single audience suggestion — Harold, Armando, monoscene, and beyond.</p>
           <span class="improv__card-link">@yallweasian ↗</span>
+          <div class="improv__card-thumb">
+            <img src="https://image.thum.io/get/width/600/crop/380/https://www.instagram.com/yallweasian" alt="Y'all We Asian Instagram" loading="lazy" />
+          </div>
         </a>
         <a href="https://www.imdb.com/name/nm4951143/" target="_blank" rel="noopener" class="improv__card improv__card--linked">
           <div class="improv__card-icon">
@@ -203,6 +209,9 @@
           <h3 class="improv__card-title">Film &amp; TV</h3>
           <p class="improv__card-text">Character-driven roles across indie film and television — always finding the human truth beneath the surface.</p>
           <span class="improv__card-link">IMDb ↗</span>
+          <div class="improv__card-thumb">
+            <img src="https://image.thum.io/get/width/600/crop/380/https://www.imdb.com/name/nm4951143/" alt="G-Su Paek on IMDb" loading="lazy" />
+          </div>
         </a>
         <a href="G-SuPaekActingResume.pdf" target="_blank" rel="noopener" class="improv__card improv__card--linked">
           <div class="improv__card-icon">
@@ -211,6 +220,18 @@
           <h3 class="improv__card-title">Acting &amp; Comedy Resume</h3>
           <p class="improv__card-text">Film, TV, improv, sketch — credits, training, and skills across a decade of performance in Austin and beyond.</p>
           <span class="improv__card-link">View Resume ↗</span>
+          <div class="improv__card-thumb improv__card-thumb--resume">
+            <div class="resume-preview">
+              <p class="resume-preview__name">G-Su Paek</p>
+              <p class="resume-preview__section">FILM / TV</p>
+              <p class="resume-preview__credit">The Leftovers — HBO</p>
+              <p class="resume-preview__credit">7 Chinese Brothers</p>
+              <p class="resume-preview__credit">Crunch Time — Rooster Teeth</p>
+              <p class="resume-preview__section">IMPROV / SKETCH</p>
+              <p class="resume-preview__credit">Hot Pot Comedy — Founder</p>
+              <p class="resume-preview__credit">Y'all We Asian — Co-Founder</p>
+            </div>
+          </div>
         </a>
         <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener" class="improv__card improv__card--linked">
           <div class="improv__card-icon">
@@ -219,6 +240,9 @@
           <h3 class="improv__card-title">Sketch &amp; Writing</h3>
           <p class="improv__card-text">Crafting sharp, character-rooted material that lands — on stage, on screen, and on the page.</p>
           <span class="improv__card-link">@hotpotcomedy ↗</span>
+          <div class="improv__card-thumb">
+            <img src="https://image.thum.io/get/width/600/crop/380/https://www.youtube.com/@hotpotcomedy" alt="Hot Pot Comedy on YouTube" loading="lazy" />
+          </div>
         </a>
       </div>
     </div>
@@ -293,7 +317,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <p class="footer__name">G-SU PAEK</p>
-          <p class="footer__tagline">Actor &bull; Improvisor</p>
+          <p class="footer__tagline">Actor &bull; Improviser</p>
         </div>
         <nav class="footer__nav">
           <a href="#about">About</a>

@@ -109,6 +109,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })();
 
+// Newsletter signup form
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const input = newsletterForm.querySelector('input');
+    const btn   = newsletterForm.querySelector('button');
+    btn.textContent = "You're on the list!";
+    btn.style.background = '#2ecc71';
+    btn.style.borderColor = '#2ecc71';
+    input.disabled = true;
+    btn.disabled = true;
+    localStorage.setItem('gsupaek_newsletter', input.value);
+  });
+  // Restore if already subscribed
+  if (localStorage.getItem('gsupaek_newsletter')) {
+    const input = newsletterForm.querySelector('input');
+    const btn   = newsletterForm.querySelector('button');
+    input.value = localStorage.getItem('gsupaek_newsletter');
+    input.disabled = true;
+    btn.textContent = "You're on the list!";
+    btn.disabled = true;
+  }
+}
+
 // Contact form — stub handler
 const form = document.getElementById('contactForm');
 if (form) {
