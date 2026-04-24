@@ -2,6 +2,20 @@
    G-SU PAEK — script.js
    ============================================ */
 
+// Theme toggle — persists to localStorage
+const html         = document.documentElement;
+const themeToggle  = document.getElementById('themeToggle');
+const savedTheme   = localStorage.getItem('gsupaek_theme') || 'dark';
+
+html.setAttribute('data-theme', savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next    = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('gsupaek_theme', next);
+});
+
 // Nav: scroll state
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
