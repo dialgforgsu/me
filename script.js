@@ -265,23 +265,36 @@ function _parseICSShows(text) {
     return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   }
 
+  const EVENTBRITE_URLS = [
+    { match: /y.?all we asian/i,    url: 'https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489' },
+    { match: /teenage dirtbag/i,    url: 'https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277' },
+  ];
+
+  function resolveTicketUrl(show) {
+    for (const rule of EVENTBRITE_URLS) {
+      if (rule.match.test(show.title)) return rule.url;
+    }
+    return show.url || '';
+  }
+
   function renderShows(shows) {
     if (!shows.length) {
       container.innerHTML = '<p class="shows__empty">No upcoming shows. Check back soon!</p>';
       return;
     }
     container.innerHTML = shows.map(show => {
-      const d      = new Date(show.start);
-      const month  = MONTHS[d.getMonth()];
-      const day    = d.getDate();
-      const time   = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-      const endIso = show.end || new Date(d.getTime() + 7200000).toISOString();
-      const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE`
+      const d         = new Date(show.start);
+      const month     = MONTHS[d.getMonth()];
+      const day       = d.getDate();
+      const time      = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      const endIso    = show.end || new Date(d.getTime() + 7200000).toISOString();
+      const calUrl    = `https://calendar.google.com/calendar/render?action=TEMPLATE`
         + `&text=${encodeURIComponent(show.title)}`
         + `&dates=${toGCalDate(show.start)}/${toGCalDate(endIso)}`
         + `&location=${encodeURIComponent(show.location)}`
         + `&details=${encodeURIComponent(show.description)}`;
-      const sub = show.description ? show.description.split(/[\n\\n]/)[0] : '';
+      const ticketUrl = resolveTicketUrl(show);
+      const sub       = show.description ? show.description.split(/[\n\\n]/)[0] : '';
       return `<div class="show__card">
         <div class="show__card-date">
           <span class="show__month">${month}</span>
@@ -293,7 +306,7 @@ function _parseICSShows(text) {
           ${show.location ? `<p class="show__card-meta">${show.location}</p>` : ''}
           <p class="show__card-meta">${time}</p>
           <div class="show__card-actions">
-            ${show.url ? `<a href="${show.url}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>` : ''}
+            ${ticketUrl ? `<a href="${ticketUrl}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>` : ''}
             <a href="${calUrl}" target="_blank" rel="noopener" class="btn btn--ghost btn--sm btn--cal" title="Add to Google Calendar">
               ${CAL_SVG} + Cal
             </a>
