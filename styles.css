@@ -526,8 +526,6 @@ ul { list-style: none; }
   height: auto;
   object-fit: contain;
   margin-bottom: 24px;
-}
-.improv__card-logo--hpc {
   background: #fff;
   padding: 12px 18px;
   border-radius: 4px;
@@ -852,16 +850,62 @@ ul { list-style: none; }
   text-align: center;
   color: var(--white);
 }
+/* Carousel wrapper */
+.press-feat__carousel {
+  position: relative;
+}
+.press-feat__viewport {
+  overflow: hidden;
+}
 .press-feat__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin: 0 auto;
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+.press-feat__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 20px));
+  z-index: 4;
+  background: rgba(0,0,0,0.52);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  width: 52px;
+  height: 52px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.press-feat__nav:hover { background: rgba(0,0,0,0.85); }
+.press-feat__nav--prev { left: 16px; }
+.press-feat__nav--next { right: 16px; }
+.press-feat__dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 0 0;
+}
+.press-feat__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background: rgba(255,255,255,0.28);
+  transition: background 0.2s, transform 0.2s;
+}
+.press-feat__dot.active {
+  background: var(--accent);
+  transform: scale(1.35);
 }
 
 /* Full-bleed photo cards */
 .press-feat__card {
   position: relative;
+  flex: 0 0 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -872,7 +916,6 @@ ul { list-style: none; }
   background-position: center top;
   text-decoration: none;
   color: var(--white);
-  transition: transform 0.4s ease;
 }
 .press-feat__card::before {
   content: '';
@@ -887,7 +930,6 @@ ul { list-style: none; }
   z-index: 0;
   transition: background 0.4s ease;
 }
-.press-feat__card:hover { transform: scale(1.012); }
 .press-feat__card:hover::before {
   background: linear-gradient(
     to bottom,
@@ -1301,7 +1343,6 @@ ul { list-style: none; }
   .improv__sources { grid-template-columns: 1fr; }
   .improv__links   { grid-template-columns: 1fr; }
   .improv__card--ywa .improv__card-header { flex-direction: column; }
-  .press-feat__grid { grid-template-columns: 1fr; }
   .press-feat__masthead { padding: 20px 24px; }
   .press-feat__pub-name { font-size: 26px; }
   .press-feat__body { padding: 24px; }

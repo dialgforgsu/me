@@ -104,53 +104,68 @@
         <p class="section__label section__label--center">Featured In</p>
         <h2 class="section__title press-feat__heading">As Seen On</h2>
       </div>
-      <div class="press-feat__grid">
+      <div class="press-feat__carousel">
+        <button class="press-feat__nav press-feat__nav--prev" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="press-feat__viewport">
+          <div class="press-feat__grid">
 
-        <!-- Resume — clean download card -->
-        <a href="G-SuPaekActingResume.pdf" target="_blank" rel="noopener" class="press-feat__card press-feat__card--resume">
-          <div class="press-feat__masthead">
-            <span class="press-feat__pub-name">RESUME</span>
-            <span class="press-feat__date">Acting &amp; Comedy</span>
-          </div>
-          <div class="press-feat__body">
-            <h3 class="press-feat__headline">Acting &amp; Comedy Resume</h3>
-            <p class="press-feat__excerpt">Film, TV, improv, sketch — credits, training, and skills across a decade of performance in Austin and beyond.</p>
-            <span class="press-feat__link">Download Resume ↓</span>
-          </div>
-        </a>
+            <!-- Resume — clean download card -->
+            <a href="G-SuPaekActingResume.pdf" target="_blank" rel="noopener" class="press-feat__card press-feat__card--resume">
+              <div class="press-feat__masthead">
+                <span class="press-feat__pub-name">RESUME</span>
+                <span class="press-feat__date">Acting &amp; Comedy</span>
+              </div>
+              <div class="press-feat__body">
+                <h3 class="press-feat__headline">Acting &amp; Comedy Resume</h3>
+                <p class="press-feat__excerpt">Film, TV, improv, sketch — credits, training, and skills across a decade of performance in Austin and beyond.</p>
+                <span class="press-feat__link">Download Resume ↓</span>
+              </div>
+            </a>
 
-        <!-- Deadline / CBS -->
-        <a href="https://deadline.com/2020/01/cbs-sets-cast-2020-comedy-showcase-1202820881/"
-           target="_blank" rel="noopener"
-           class="press-feat__card press-feat__card--cbs">
-          <div class="press-feat__masthead">
-            <span class="press-feat__pub-name">DEADLINE</span>
-            <span class="press-feat__date">January 2020</span>
-          </div>
-          <div class="press-feat__body">
-            <h3 class="press-feat__headline">CBS Sets Cast for 2020 Comedy Showcase</h3>
-            <p class="press-feat__excerpt">
-              G-Su Paek selected as one of 20 performers for CBS's annual Comedy Showcase — a 15-year tradition spotlighting emerging comedy talent at the El Portal Theatre in Los Angeles.
-            </p>
-            <span class="press-feat__link">Read on Deadline ↗</span>
-          </div>
-        </a>
+            <!-- Deadline / CBS -->
+            <a href="https://deadline.com/2020/01/cbs-sets-cast-2020-comedy-showcase-1202820881/"
+               target="_blank" rel="noopener"
+               class="press-feat__card press-feat__card--cbs">
+              <div class="press-feat__masthead">
+                <span class="press-feat__pub-name">DEADLINE</span>
+                <span class="press-feat__date">January 2020</span>
+              </div>
+              <div class="press-feat__body">
+                <h3 class="press-feat__headline">CBS Sets Cast for 2020 Comedy Showcase</h3>
+                <p class="press-feat__excerpt">
+                  G-Su Paek selected as one of 20 performers for CBS's annual Comedy Showcase — a 15-year tradition spotlighting emerging comedy talent at the El Portal Theatre in Los Angeles.
+                </p>
+                <span class="press-feat__link">Read on Deadline ↗</span>
+              </div>
+            </a>
 
-        <!-- Bold Journey -->
-        <a href="https://boldjourney.com/meet-g-su-paek/" target="_blank" rel="noopener" class="press-feat__card press-feat__card--boldjourney">
-          <div class="press-feat__masthead">
-            <span class="press-feat__pub-name">BOLD JOURNEY</span>
-            <span class="press-feat__date">Featured</span>
-          </div>
-          <div class="press-feat__body">
-            <h3 class="press-feat__headline">Meet G-Su Paek</h3>
-            <p class="press-feat__excerpt">
-              An in-depth feature on G-Su's journey through performance — the grind, the craft, and what keeps him showing up.
-            </p>
-            <span class="press-feat__link">Read on Bold Journey ↗</span>
-          </div>
-        </a>
+            <!-- Bold Journey -->
+            <a href="https://boldjourney.com/meet-g-su-paek/" target="_blank" rel="noopener" class="press-feat__card press-feat__card--boldjourney">
+              <div class="press-feat__masthead">
+                <span class="press-feat__pub-name">BOLD JOURNEY</span>
+                <span class="press-feat__date">Featured</span>
+              </div>
+              <div class="press-feat__body">
+                <h3 class="press-feat__headline">Meet G-Su Paek</h3>
+                <p class="press-feat__excerpt">
+                  An in-depth feature on G-Su's journey through performance — the grind, the craft, and what keeps him showing up.
+                </p>
+                <span class="press-feat__link">Read on Bold Journey ↗</span>
+              </div>
+            </a>
 
+          </div>
+        </div>
+        <button class="press-feat__nav press-feat__nav--next" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="press-feat__dots">
+          <button class="press-feat__dot active" data-idx="0" aria-label="Card 1"></button>
+          <button class="press-feat__dot" data-idx="1" aria-label="Card 2"></button>
+          <button class="press-feat__dot" data-idx="2" aria-label="Card 3"></button>
+        </div>
       </div>
     </div>
   </section>

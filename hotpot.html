@@ -116,6 +116,30 @@
       text-transform: uppercase;
       font-family: var(--font-heading);
     }
+    .hpc-filter {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .hpc-filter__btn {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: var(--gray);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .hpc-filter__btn:hover { border-color: var(--accent); color: var(--white); }
+    .hpc-filter__btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
     .hpc-loading, .hpc-error {
       text-align: center;
       padding: 80px 24px;
@@ -165,11 +189,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         Back to G-Su Paek
       </a>
-      <div class="hpc-hero__icon">
-        <img src="images/HPC Logo.png" alt="Hot Pot Comedy" class="hpc-hero__logo" />
-      </div>
       <h1 class="hpc-hero__title">HOT POT<br>COMEDY</h1>
-      <p class="hpc-hero__sub">All Videos &mdash; Chronological Order</p>
       <div class="hpc-hero__actions">
         <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener" class="btn btn--primary">
           Subscribe on YouTube ↗
@@ -181,6 +201,10 @@
   <!-- VIDEOS -->
   <section class="hpc-grid">
     <div class="container">
+      <div class="hpc-filter">
+        <button class="hpc-filter__btn active" data-order="asc">Oldest First</button>
+        <button class="hpc-filter__btn" data-order="desc">Latest First</button>
+      </div>
       <div class="hpc-videos" id="hpcVideos">
         <div class="hpc-loading">Loading videos…</div>
       </div>
@@ -234,6 +258,7 @@
       const container  = document.getElementById('hpcVideos');
       const CHANNEL_ID = 'UCFVYOfmUZd03OLl4oRBI5Yg';
       const RSS_URL    = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+      let allEntries   = [];
 
       function parseRSS(text) {
         const entryRx     = /<entry>([\s\S]*?)<\/entry>/g;
@@ -253,31 +278,22 @@
       }
 
       async function fetchFeed() {
-        // Try direct — YouTube RSS supports CORS
         try {
           const res = await fetch(RSS_URL);
           if (res.ok) return await res.text();
         } catch (_) {}
-        // Fallback: CORS proxy
         const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(RSS_URL);
         const res = await fetch(proxy);
         if (!res.ok) throw new Error('proxy');
         return await res.text();
       }
 
-      try {
-        const text    = await fetchFeed();
-        const entries = parseRSS(text);
-
-        // Chronological: oldest first
-        entries.sort((a, b) => new Date(a.published) - new Date(b.published));
-
-        if (!entries.length) {
-          container.innerHTML = '<div class="hpc-error">No videos found.</div>';
-          return;
-        }
-
-        container.innerHTML = entries.map(v => {
+      function renderVideos(order) {
+        const sorted = [...allEntries].sort((a, b) => {
+          const diff = new Date(a.published) - new Date(b.published);
+          return order === 'asc' ? diff : -diff;
+        });
+        container.innerHTML = sorted.map(v => {
           const date  = new Date(v.published).toLocaleDateString('en-US', {
             year: 'numeric', month: 'short', day: 'numeric'
           });
@@ -301,6 +317,25 @@
             </div>
           </div>`;
         }).join('');
+      }
+
+      // Filter button handlers
+      document.querySelectorAll('.hpc-filter__btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.hpc-filter__btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (allEntries.length) renderVideos(btn.dataset.order);
+        });
+      });
+
+      try {
+        const text = await fetchFeed();
+        allEntries = parseRSS(text);
+        if (!allEntries.length) {
+          container.innerHTML = '<div class="hpc-error">No videos found.</div>';
+          return;
+        }
+        renderVideos('asc');
       } catch {
         container.innerHTML = '<div class="hpc-error">Unable to load videos — visit <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" style="color:var(--accent)">@hotpotcomedy</a> on YouTube.</div>';
       }

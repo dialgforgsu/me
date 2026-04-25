@@ -124,8 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 });
 
-// Visitor counter — uses localStorage to track unique-device visits
-// and countapi.xyz to keep a global running total across all visitors
+// Visitor counter
 (function () {
   const countEl = document.getElementById('visitorCount');
   if (!countEl) return;
@@ -134,20 +133,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const alreadyCounted = sessionStorage.getItem(STORAGE_KEY);
 
   const endpoint = alreadyCounted
-    ? 'https://api.countapi.xyz/get/gsupaek-site/visits'
-    : 'https://api.countapi.xyz/hit/gsupaek-site/visits';
+    ? 'https://api.counterapi.dev/v1/gsupaek-site/visits'
+    : 'https://api.counterapi.dev/v1/gsupaek-site/visits/up';
 
   fetch(endpoint)
     .then(r => r.json())
     .then(data => {
-      if (data && data.value != null) {
-        countEl.textContent = data.value.toLocaleString();
+      const val = data && (data.count ?? data.value);
+      if (val != null) {
+        countEl.textContent = Number(val).toLocaleString();
         sessionStorage.setItem(STORAGE_KEY, '1');
       }
     })
     .catch(() => {
       countEl.textContent = '—';
     });
+})();
+
+// Press / As Seen On carousel
+(function () {
+  const grid = document.querySelector('.press-feat__grid');
+  if (!grid) return;
+
+  const cards = grid.querySelectorAll('.press-feat__card');
+  const total = cards.length;
+  let current = 0;
+
+  function goTo(n) {
+    current = ((n % total) + total) % total;
+    grid.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.press-feat__dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  document.querySelector('.press-feat__nav--prev')
+    ?.addEventListener('click', () => goTo(current - 1));
+  document.querySelector('.press-feat__nav--next')
+    ?.addEventListener('click', () => goTo(current + 1));
+  document.querySelectorAll('.press-feat__dot').forEach(dot => {
+    dot.addEventListener('click', () => goTo(+dot.dataset.idx));
+  });
+
+  // Swipe support
+  let startX = 0;
+  const viewport = document.querySelector('.press-feat__viewport');
+  viewport?.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  viewport?.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+  });
 })();
 
 // Newsletter signup form
