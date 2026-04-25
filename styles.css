@@ -798,21 +798,7 @@ ul { list-style: none; }
 
 /* ── Press / As Seen On ── */
 .press-feat {
-  position: relative;
-  background-image: url('images/portrait1.png');
-  background-size: cover;
-  background-position: center 30%;
-}
-.press-feat::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 5, 5, 0.72);
-  z-index: 0;
-}
-.press-feat > .container {
-  position: relative;
-  z-index: 1;
+  background: var(--black);
 }
 .press-feat .section__label--center { color: var(--accent); }
 .press-feat__heading {
@@ -822,91 +808,108 @@ ul { list-style: none; }
 .press-feat__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 2px;
   margin: 0 auto;
 }
+
+/* Full-bleed photo cards */
 .press-feat__card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--dark-2);
-  border: 1px solid rgba(255,255,255,0.08);
+  justify-content: flex-end;
+  min-height: 460px;
+  overflow: hidden;
+  background-color: var(--dark-2);
+  background-size: cover;
+  background-position: center top;
   text-decoration: none;
-  color: inherit;
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  color: var(--white);
+  transition: transform 0.4s ease;
 }
-.press-feat__card:hover {
-  border-color: var(--accent);
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+.press-feat__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.22) 0%,
+    rgba(0,0,0,0.48) 45%,
+    rgba(0,0,0,0.91) 100%
+  );
+  z-index: 0;
+  transition: background 0.4s ease;
 }
+.press-feat__card:hover { transform: scale(1.012); }
+.press-feat__card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.32) 0%,
+    rgba(0,0,0,0.6) 45%,
+    rgba(0,0,0,0.94) 100%
+  );
+}
+
+/* Per-card background images */
+.press-feat__card--resume      { background-image: url('images/kidg.jpg');      background-position: center 15%; }
+.press-feat__card--cbs         { background-image: url('images/CBS HS.jpg');    background-position: center top; }
+.press-feat__card--boldjourney { background-image: url('images/portrait1.png'); background-position: center top; }
+
+/* Publication label — floats at top */
 .press-feat__masthead {
-  background: #000;
-  padding: 24px 28px;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1;
+  padding: 18px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-shrink: 0;
+  gap: 12px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
 }
-.press-feat__masthead--teal { background: var(--accent); }
-.press-feat__masthead--teal .press-feat__pub-name { color: var(--black); }
-.press-feat__masthead--teal .press-feat__date { color: rgba(0,0,0,0.55); }
 .press-feat__pub-name {
   font-family: var(--font-display);
-  font-size: 32px;
-  letter-spacing: 0.06em;
+  font-size: 22px;
+  letter-spacing: 0.1em;
   color: var(--white);
 }
 .press-feat__date {
   font-family: var(--font-heading);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
 }
-.press-feat__pdf-preview {
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: rgba(0,0,0,0.04);
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-}
-.press-feat__pdf-preview iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  pointer-events: none;
-  display: block;
-}
+
+/* Content at bottom */
 .press-feat__body {
-  padding: 28px;
-  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 24px 22px;
   display: flex;
   flex-direction: column;
 }
 .press-feat__headline {
   font-family: var(--font-heading);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--white);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   line-height: 1.3;
 }
 .press-feat__excerpt {
-  font-size: 13px;
-  line-height: 1.8;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 20px;
-  flex: 1;
+  font-size: 12px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.58);
+  margin-bottom: 14px;
 }
 .press-feat__link {
   font-family: var(--font-heading);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
   text-decoration: none;
@@ -1470,16 +1473,11 @@ ul { list-style: none; }
 /* Footer stays dark in both modes */
 [data-theme="light"] .footer { background: #111; }
 
-/* Press card in light mode */
-[data-theme="light"] .press-feat__card { background: #fff; border-color: rgba(0,0,0,0.1); }
-[data-theme="light"] .press-feat__card:hover { border-color: var(--accent-dim); }
-[data-theme="light"] .press-feat__body { background: #fff; }
-[data-theme="light"] .press-feat__headline { color: var(--black); }
-[data-theme="light"] .press-feat__excerpt { color: #555; }
-[data-theme="light"] .press-feat__pdf-preview {
-  background: rgba(0,0,0,0.03);
-  border-color: rgba(0,0,0,0.07);
-}
+/* Press cards always use dark photo treatment in both themes */
+[data-theme="light"] .press-feat { background: var(--black); }
+[data-theme="light"] .press-feat__card { background-color: var(--dark-2); }
+[data-theme="light"] .press-feat__headline { color: var(--white); }
+[data-theme="light"] .press-feat__excerpt { color: rgba(255,255,255,0.58); }
 
 /* IMDb credits light mode */
 [data-theme="light"] .isrc__credit-row { border-color: rgba(0,0,0,0.07); }

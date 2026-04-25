@@ -211,7 +211,49 @@ if (form) {
   });
 }
 
-// Upcoming shows — fetched from /api/shows (server proxies the Google Calendar ICS)
+// Upcoming shows — tries server API first, falls back to direct ICS parse via CORS proxy
+const _ICS_URL = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
+
+function _parseICSShows(text) {
+  const comp  = new ICAL.Component(ICAL.parse(text));
+  const now   = ICAL.Time.now();
+  const limit = now.clone();
+  limit.addDuration(ICAL.Duration.fromSeconds(180 * 24 * 3600));
+  const results = [];
+
+  for (const vevent of comp.getAllSubcomponents('vevent')) {
+    const ev = new ICAL.Event(vevent);
+    if (ev.isRecurring()) {
+      const iter = ev.iterator();
+      let next, count = 0;
+      while (count < 30 && (next = iter.next()) && next.compare(limit) <= 0) {
+        count++;
+        if (next.compare(now) < 0) continue;
+        const det = ev.getOccurrenceDetails(next);
+        results.push({
+          title:       ev.summary || '',
+          start:       next.toJSDate().toISOString(),
+          end:         det.endDate ? det.endDate.toJSDate().toISOString() : null,
+          location:    vevent.getFirstPropertyValue('location') || '',
+          description: vevent.getFirstPropertyValue('description') || '',
+          url:         vevent.getFirstPropertyValue('url') || '',
+        });
+      }
+    } else {
+      if (ev.startDate.compare(now) < 0) continue;
+      results.push({
+        title:       ev.summary || '',
+        start:       ev.startDate.toJSDate().toISOString(),
+        end:         ev.endDate ? ev.endDate.toJSDate().toISOString() : null,
+        location:    vevent.getFirstPropertyValue('location') || '',
+        description: vevent.getFirstPropertyValue('description') || '',
+        url:         vevent.getFirstPropertyValue('url') || '',
+      });
+    }
+  }
+  return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, 5);
+}
+
 (async function loadShows() {
   const container = document.getElementById('showsList');
   if (!container) return;
@@ -223,16 +265,11 @@ if (form) {
     return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   }
 
-  try {
-    const res   = await fetch('/api/shows');
-    if (!res.ok) throw new Error('fetch');
-    const shows = await res.json();
-
+  function renderShows(shows) {
     if (!shows.length) {
       container.innerHTML = '<p class="shows__empty">No upcoming shows. Check back soon!</p>';
       return;
     }
-
     container.innerHTML = shows.map(show => {
       const d      = new Date(show.start);
       const month  = MONTHS[d.getMonth()];
@@ -245,7 +282,6 @@ if (form) {
         + `&location=${encodeURIComponent(show.location)}`
         + `&details=${encodeURIComponent(show.description)}`;
       const sub = show.description ? show.description.split(/[\n\\n]/)[0] : '';
-
       return `<div class="show__card">
         <div class="show__card-date">
           <span class="show__month">${month}</span>
@@ -265,6 +301,23 @@ if (form) {
         </div>
       </div>`;
     }).join('');
+  }
+
+  // 1. Try server API (works when `npm start` is running)
+  try {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 3000);
+    const res  = await fetch('/api/shows', { signal: ctrl.signal });
+    clearTimeout(tid);
+    if (res.ok) { renderShows(await res.json()); return; }
+  } catch {}
+
+  // 2. Fallback: fetch ICS directly via CORS proxy + parse with ical.js
+  try {
+    const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(_ICS_URL);
+    const res   = await fetch(proxy);
+    if (!res.ok) throw new Error('proxy');
+    renderShows(_parseICSShows(await res.text()));
   } catch {
     container.innerHTML = '<p class="shows__empty">Unable to load shows — check back soon!</p>';
   }
