@@ -15,7 +15,10 @@
   <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="nav__inner">
-      <a href="#home" class="nav__logo">G-SU PAEK</a>
+      <a href="#home" class="nav__logo">
+        <span class="nav__logo-icon" aria-hidden="true"></span>
+        G-SU PAEK
+      </a>
       <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -24,6 +27,7 @@
         <li><a href="#reel" class="nav__link">Reel</a></li>
         <li><a href="#improv" class="nav__link">Improv</a></li>
         <li><a href="#shows" class="nav__link">Shows</a></li>
+        <li><a href="#press" class="nav__link">Press</a></li>
         <li><a href="#contact" class="nav__link">Contact</a></li>
       </ul>
       <div class="nav__social">
@@ -153,28 +157,22 @@
   </section>
 
   <!-- REEL -->
-  <section class="reel section section--dark" id="reel">
-    <div class="container">
-      <div class="section__header section__header--center">
-        <p class="section__label section__label--light">Watch</p>
-        <h2 class="section__title section__title--light">Demo Reel</h2>
-      </div>
-      <div class="reel__embed">
-        <iframe src="https://www.youtube.com/embed/A4serB8kRZU"
-          title="G-Su Paek — Demo Acting Reel"
-          frameborder="0" allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
-        </iframe>
-      </div>
+  <section class="reel section--dark" id="reel">
+    <div class="reel__player-wrap">
+      <div id="reelPlayer"></div>
+    </div>
+    <div class="reel__label-overlay">
+      <p class="section__label section__label--light">Watch</p>
+      <h2 class="reel__overlay-title">Demo Reel</h2>
     </div>
   </section>
 
   <!-- IMPROV -->
-  <section class="improv section" id="improv">
+  <section class="improv section improv--portrait-bg" id="improv">
     <div class="container">
       <div class="section__header">
         <p class="section__label">Craft</p>
-        <h2 class="section__title">Improv &amp;<br>Performance</h2>
+        <h2 class="section__title section__title--light">Improv &amp;<br>Performance</h2>
       </div>
       <div class="improv__sources">
 
@@ -186,9 +184,42 @@
             </div>
             <p class="isrc__platform">Instagram</p>
             <h3 class="isrc__title">Long-Form Improv</h3>
-            <p class="isrc__desc">Building full narrative worlds from a single audience suggestion — Harold, Armando, monoscene, and beyond.</p>
-            <p class="isrc__handle">@yallweasian</p>
-            <a href="https://www.instagram.com/yallweasian" target="_blank" rel="noopener" class="btn btn--primary btn--sm btn--full">View on Instagram ↗</a>
+            <div class="isrc__embed-wrap isrc__embed-wrap--ig">
+              <blockquote
+                class="instagram-media"
+                data-instgrm-permalink="https://www.instagram.com/yallweasian/"
+                data-instgrm-version="14"
+                data-instgrm-captioned
+                style="background:#000;border:0;border-radius:0;box-shadow:none;margin:0;padding:0;width:100%;min-width:100%;">
+                <div class="isrc__ig-fallback">
+                  <p class="isrc__ig-handle">@yallweasian</p>
+                  <p class="isrc__desc">Building full narrative worlds from a single audience suggestion — Harold, Armando, monoscene, and beyond.</p>
+                  <a href="https://www.instagram.com/yallweasian" target="_blank" rel="noopener" class="btn btn--primary btn--sm btn--full">View on Instagram ↗</a>
+                </div>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+
+        <div class="isrc isrc--yt">
+          <div class="isrc__top"></div>
+          <div class="isrc__body">
+            <div class="isrc__icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </div>
+            <p class="isrc__platform">YouTube</p>
+            <h3 class="isrc__title">Sketch &amp; Writing</h3>
+            <div class="isrc__embed-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/videoseries?list=UUUNtqEG0EAfXRP3C7rFQuAw&rel=0&modestbranding=1"
+                title="Hot Pot Comedy — YouTube Channel"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <p class="isrc__handle">@hotpotcomedy</p>
+            <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener" class="btn btn--primary btn--sm btn--full">View on YouTube ↗</a>
           </div>
         </div>
 
@@ -200,7 +231,12 @@
             </div>
             <p class="isrc__platform">IMDb</p>
             <h3 class="isrc__title">Film &amp; TV</h3>
-            <p class="isrc__desc">Character-driven roles across indie film and television — The Leftovers (HBO), 7 Chinese Brothers, Crunch Time.</p>
+            <div class="isrc__imdb-credits">
+              <div class="isrc__credit-row"><span class="isrc__credit-title">The Leftovers</span><span class="isrc__credit-role">HBO</span></div>
+              <div class="isrc__credit-row"><span class="isrc__credit-title">7 Chinese Brothers</span><span class="isrc__credit-role">Feature Film</span></div>
+              <div class="isrc__credit-row"><span class="isrc__credit-title">Crunch Time</span><span class="isrc__credit-role">Series</span></div>
+            </div>
+            <p class="isrc__desc">Character-driven roles across indie film and television. A decade of performance on screen and stage.</p>
             <p class="isrc__handle">G-Su Paek</p>
             <a href="https://www.imdb.com/name/nm4951143/" target="_blank" rel="noopener" class="btn btn--primary btn--sm btn--full">View on IMDb ↗</a>
           </div>
@@ -218,20 +254,33 @@
           </div>
         </div>
 
-        <div class="isrc isrc--yt">
-          <div class="isrc__top"></div>
-          <div class="isrc__body">
-            <div class="isrc__icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-            </div>
-            <p class="isrc__platform">YouTube</p>
-            <h3 class="isrc__title">Sketch &amp; Writing</h3>
-            <p class="isrc__desc">Crafting sharp, character-rooted material that lands — on stage, on screen, and on the page.</p>
-            <p class="isrc__handle">@hotpotcomedy</p>
-            <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener" class="btn btn--primary btn--sm btn--full">View on YouTube ↗</a>
-          </div>
-        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- AS SEEN ON -->
+  <section class="press-feat section" id="press">
+    <div class="container">
+      <div class="section__header section__header--center">
+        <p class="section__label section__label--center">Featured In</p>
+        <h2 class="section__title press-feat__heading">As Seen On</h2>
+      </div>
+      <div class="press-feat__grid">
+        <a href="https://deadline.com/2020/01/cbs-sets-cast-2020-comedy-showcase-1202820881/"
+           target="_blank" rel="noopener"
+           class="press-feat__card">
+          <div class="press-feat__masthead">
+            <span class="press-feat__pub-name">DEADLINE</span>
+            <span class="press-feat__date">January 2020</span>
+          </div>
+          <div class="press-feat__body">
+            <h3 class="press-feat__headline">CBS Sets Cast for 2020 Comedy Showcase</h3>
+            <p class="press-feat__excerpt">
+              G-Su Paek selected as one of 20 performers for CBS's annual Comedy Showcase — a 15-year tradition spotlighting emerging comedy talent at the El Portal Theatre in Los Angeles, attended by executives and talent representatives from across the industry.
+            </p>
+            <span class="press-feat__link">Read on Deadline ↗</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -312,6 +361,7 @@
           <a href="#reel">Reel</a>
           <a href="#improv">Improv</a>
           <a href="#shows">Shows</a>
+          <a href="#press">Press</a>
           <a href="#contact">Contact</a>
         </nav>
         <div class="footer__social">
@@ -339,6 +389,7 @@
     </div>
   </footer>
 
+  <script async src="//www.instagram.com/embed.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

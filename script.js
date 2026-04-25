@@ -2,6 +2,47 @@
    G-SU PAEK — script.js
    ============================================ */
 
+// YouTube IFrame API — reel section autoplay on scroll
+;(function () {
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScript = document.getElementsByTagName('script')[0];
+  firstScript.parentNode.insertBefore(tag, firstScript);
+})();
+
+var reelPlayer;
+
+window.onYouTubeIframeAPIReady = function () {
+  reelPlayer = new YT.Player('reelPlayer', {
+    videoId: 'A4serB8kRZU',
+    playerVars: {
+      autoplay: 0,
+      mute: 1,
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+      playsinline: 1,
+      enablejsapi: 1,
+    },
+    events: {
+      onReady: function (e) {
+        e.target.mute();
+        var reelSection = document.getElementById('reel');
+        if (!reelSection) return;
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              e.target.playVideo();
+            } else {
+              e.target.pauseVideo();
+            }
+          });
+        }, { threshold: 0.5 }).observe(reelSection);
+      }
+    }
+  });
+};
+
 // Theme toggle — persists to localStorage
 const html         = document.documentElement;
 const themeToggle  = document.getElementById('themeToggle');
