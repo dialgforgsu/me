@@ -876,30 +876,11 @@ ul { list-style: none; }
   text-align: center;
   color: var(--white);
 }
-/* ── As Seen On: 2-column layout ── */
-.press-feat__layout {
+/* ── As Seen On: equal 3-column grid ── */
+.press-feat__grid {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2px;
-  align-items: stretch;
-}
-.press-feat__cards {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  gap: 2px;
-}
-.press-feat__video-wrap {
-  position: relative;
-  background: #000;
-  min-height: 280px;
-}
-.press-feat__video-wrap iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
 }
 
 /* Full-bleed photo cards */
@@ -908,7 +889,7 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 190px;
+  min-height: 460px;
   overflow: hidden;
   background-color: var(--dark-2);
   background-size: cover;
@@ -1344,9 +1325,7 @@ ul { list-style: none; }
   .improv__sources { grid-template-columns: 1fr; }
   .improv__links   { grid-template-columns: 1fr; }
   .improv__card--ywa .improv__card-header { flex-direction: column; }
-  .press-feat__layout { grid-template-columns: 1fr; }
-  .press-feat__video-wrap { aspect-ratio: 16 / 9; min-height: auto; }
-  .press-feat__card { min-height: 240px; }
+  .press-feat__grid { grid-template-columns: 1fr; }
   .press-feat__masthead { padding: 20px 24px; }
   .press-feat__pub-name { font-size: 26px; }
   .press-feat__body { padding: 24px; }
