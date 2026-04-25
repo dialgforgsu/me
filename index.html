@@ -85,9 +85,14 @@
           <a href="#contact" class="btn btn--primary btn--sm">Get in Touch</a>
         </div>
 
-        <!-- Col 3: Shows (populated dynamically from /api/shows) -->
+        <!-- Col 3: Shows (populated dynamically) -->
         <div class="about__shows" id="shows">
-          <p class="section__label">Upcoming Shows</p>
+          <div class="shows__header">
+            <p class="section__label">Upcoming Shows</p>
+            <button class="shows__refresh" id="showsRefresh" aria-label="Refresh shows">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </button>
+          </div>
           <div class="shows__sidebar" id="showsList">
             <p class="shows__loading">Loading shows…</p>
           </div>

@@ -152,34 +152,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Press / As Seen On carousel
 (function () {
-  const grid = document.querySelector('.press-feat__grid');
-  if (!grid) return;
+  const viewport = document.querySelector('.press-feat__viewport');
+  const grid     = document.querySelector('.press-feat__grid');
+  if (!grid || !viewport) return;
 
-  const cards = grid.querySelectorAll('.press-feat__card');
+  const cards = Array.from(grid.querySelectorAll('.press-feat__card'));
   const total = cards.length;
   let current = 0;
 
+  function cardW() { return viewport.offsetWidth; }
+
   function goTo(n) {
     current = ((n % total) + total) % total;
-    grid.style.transform = `translateX(-${current * 100}%)`;
-    document.querySelectorAll('.press-feat__dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
+    grid.style.transform = `translateX(-${current * cardW()}px)`;
+    document.querySelectorAll('.press-feat__dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current));
   }
+
+  // Recalculate on resize so pixel position stays correct
+  window.addEventListener('resize', () => goTo(current));
 
   document.querySelector('.press-feat__nav--prev')
     ?.addEventListener('click', () => goTo(current - 1));
   document.querySelector('.press-feat__nav--next')
     ?.addEventListener('click', () => goTo(current + 1));
-  document.querySelectorAll('.press-feat__dot').forEach(dot => {
-    dot.addEventListener('click', () => goTo(+dot.dataset.idx));
-  });
+  document.querySelectorAll('.press-feat__dot').forEach(dot =>
+    dot.addEventListener('click', () => goTo(+dot.dataset.idx)));
 
-  // Swipe support
+  // Touch swipe
   let startX = 0;
-  const viewport = document.querySelector('.press-feat__viewport');
-  viewport?.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-  viewport?.addEventListener('touchend', e => {
+  viewport.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  viewport.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
   });
@@ -289,9 +292,11 @@ function _parseICSShows(text) {
   return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, 5);
 }
 
-(async function loadShows() {
+async function loadShows() {
   const container = document.getElementById('showsList');
   if (!container) return;
+
+  container.innerHTML = '<p class="shows__loading">Loading shows…</p>';
 
   const MONTHS  = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   const CAL_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
@@ -360,4 +365,11 @@ function _parseICSShows(text) {
   } catch {
     container.innerHTML = '<p class="shows__empty">Unable to load shows — check back soon!</p>';
   }
-})();
+}
+
+loadShows();
+
+document.getElementById('showsRefresh')?.addEventListener('click', function () {
+  this.classList.add('spinning');
+  loadShows().finally(() => this.classList.remove('spinning'));
+});

@@ -699,7 +699,7 @@ ul { list-style: none; }
 /* ── Improv troupe link cards ── */
 .improv__links {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 2px;
   margin-top: 48px;
 }
@@ -736,6 +736,32 @@ ul { list-style: none; }
   box-shadow: none !important;
   background: var(--dark-2) !important;
 }
+
+/* ── Shows header + refresh ── */
+.shows__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.shows__header .section__label { margin-bottom: 0; }
+.shows__refresh {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--gray);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+.shows__refresh:hover { color: var(--accent); border-color: var(--accent); }
+.shows__refresh.spinning svg { animation: spin-icon 0.7s linear infinite; }
+@keyframes spin-icon { to { transform: rotate(360deg); } }
 
 /* ── Shows loading / empty state ── */
 .shows__loading,
@@ -905,11 +931,13 @@ ul { list-style: none; }
 /* Full-bleed photo cards */
 .press-feat__card {
   position: relative;
-  flex: 0 0 100%;
+  flex: none;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 460px;
+  min-height: 520px;
   overflow: hidden;
   background-color: var(--dark-2);
   background-size: cover;
