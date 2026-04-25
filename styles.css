@@ -687,9 +687,42 @@ ul { list-style: none; }
 /* ── Improv troupe link cards ── */
 .improv__links {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 1fr;
   gap: 2px;
   margin-top: 48px;
+}
+
+/* Y'all We Asian — Instagram embed card */
+.improv__card--ywa {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  background: var(--dark);
+}
+.improv__card--ywa .improv__card-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+.improv__card--ywa .improv__card-header > div { flex: 1; }
+.ywa__posts {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+  padding-bottom: 4px;
+}
+.ywa__posts .instagram-media {
+  flex-shrink: 0 !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: var(--dark-2) !important;
 }
 
 /* ── Shows loading / empty state ── */
@@ -851,9 +884,9 @@ ul { list-style: none; }
 }
 
 /* Per-card background images */
-.press-feat__card--resume      { background-image: url('images/kidg.jpg');      background-position: center 15%; }
-.press-feat__card--cbs         { background-image: url('images/CBS HS.jpg');    background-position: center top; }
-.press-feat__card--boldjourney { background-image: url('images/portrait1.png'); background-position: center top; }
+.press-feat__card--resume      { background-image: url('images/kidg.jpg');          background-position: center 15%; }
+.press-feat__card--cbs         { background-image: url('images/CBS HS2.jpg');       background-position: center top; }
+.press-feat__card--boldjourney { background-image: url('images/Red Carpet HS.jpg'); background-position: center top; }
 
 /* Publication label — floats at top */
 .press-feat__masthead {
@@ -1253,6 +1286,7 @@ ul { list-style: none; }
 
   .improv__sources { grid-template-columns: 1fr; }
   .improv__links   { grid-template-columns: 1fr; }
+  .improv__card--ywa .improv__card-header { flex-direction: column; }
   .press-feat__grid { grid-template-columns: 1fr; }
   .press-feat__masthead { padding: 20px 24px; }
   .press-feat__pub-name { font-size: 26px; }

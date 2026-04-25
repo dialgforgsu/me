@@ -303,16 +303,7 @@ function _parseICSShows(text) {
     }).join('');
   }
 
-  // 1. Try server API (works when `npm start` is running)
-  try {
-    const ctrl = new AbortController();
-    const tid  = setTimeout(() => ctrl.abort(), 3000);
-    const res  = await fetch('/api/shows', { signal: ctrl.signal });
-    clearTimeout(tid);
-    if (res.ok) { renderShows(await res.json()); return; }
-  } catch {}
-
-  // 2. Fallback: fetch ICS directly via CORS proxy + parse with ical.js
+  // Always fetch ICS directly via CORS proxy
   try {
     const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(_ICS_URL);
     const res   = await fetch(proxy);

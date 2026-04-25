@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hot Pot Comedy — Videos | G-Su Paek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .hpc-hero {
+      background: var(--dark);
+      padding: 80px 0 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hpc-hero__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+    .hpc-hero__back:hover { color: var(--accent); }
+    .hpc-hero__icon { color: var(--accent); margin-bottom: 20px; }
+    .hpc-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 96px);
+      color: var(--white);
+      line-height: 0.9;
+      margin-bottom: 16px;
+    }
+    .hpc-hero__sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-heading);
+    }
+    .hpc-hero__actions { margin-top: 28px; }
+
+    .hpc-grid {
+      padding: 60px 0 100px;
+      background: var(--dark);
+    }
+    .hpc-videos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+    .hpc-video {
+      background: var(--dark-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .hpc-video:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .hpc-video__embed {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .hpc-video__embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .hpc-video__info { padding: 18px 20px; }
+    .hpc-video__title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.35;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .hpc-video__date {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-heading);
+    }
+    .hpc-loading, .hpc-error {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--gray);
+      font-family: var(--font-heading);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .hpc-videos { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">G-SU PAEK</a>
+      <div class="nav__social">
+        <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener" class="nav__social-link" aria-label="Hot Pot Comedy on YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
+      <button class="nav__theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hpc-hero" style="padding-top: calc(var(--nav-height) + 60px);">
+    <div class="container">
+      <a href="index.html#improv" class="hpc-hero__back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to G-Su Paek
+      </a>
+      <div class="hpc-hero__icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+      </div>
+      <h1 class="hpc-hero__title">HOT POT<br>COMEDY</h1>
+      <p class="hpc-hero__sub">All Videos &mdash; Chronological Order</p>
+      <div class="hpc-hero__actions">
+        <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener" class="btn btn--primary">
+          Subscribe on YouTube ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section class="hpc-grid">
+    <div class="container">
+      <div class="hpc-videos" id="hpcVideos">
+        <div class="hpc-loading">Loading videos…</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Theme toggle
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('gsupaek_theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+    themeToggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('gsupaek_theme', next);
+    });
+
+    // Nav scroll state
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Load Hot Pot Comedy videos from YouTube RSS (supports CORS — no proxy needed)
+    (async function () {
+      const container  = document.getElementById('hpcVideos');
+      const CHANNEL_ID = 'UCFVYOfmUZd03OLl4oRBI5Yg';
+      const RSS_URL    = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+
+      function parseRSS(text) {
+        // Extract entries using regex (avoids DOMParser namespace issues)
+        const entryRx    = /<entry>([\s\S]*?)<\/entry>/g;
+        const videoIdRx  = /<yt:videoId>([^<]+)<\/yt:videoId>/;
+        const titleRx    = /<title>([^<]+)<\/title>/;
+        const publishedRx = /<published>([^<]+)<\/published>/;
+        const results = [];
+        let m;
+        while ((m = entryRx.exec(text)) !== null) {
+          const block     = m[1];
+          const videoId   = (videoIdRx.exec(block)   || [])[1] || '';
+          const title     = (titleRx.exec(block)      || [])[1] || '';
+          const published = (publishedRx.exec(block)  || [])[1] || '';
+          if (videoId) results.push({ videoId, title, published });
+        }
+        return results;
+      }
+
+      try {
+        const res  = await fetch(RSS_URL);
+        if (!res.ok) throw new Error('fetch');
+        const text = await res.text();
+        const entries = parseRSS(text);
+
+        // Chronological: oldest first
+        entries.sort((a, b) => new Date(a.published) - new Date(b.published));
+
+        if (!entries.length) {
+          container.innerHTML = '<div class="hpc-error">No videos found.</div>';
+          return;
+        }
+
+        container.innerHTML = entries.map(v => {
+          const date = new Date(v.published).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric'
+          });
+          const title = v.title.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+          return `<div class="hpc-video">
+            <div class="hpc-video__embed">
+              <iframe
+                src="https://www.youtube.com/embed/${v.videoId}"
+                title="${title.replace(/"/g, '&quot;')}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy">
+              </iframe>
+            </div>
+            <div class="hpc-video__info">
+              <p class="hpc-video__title">${title}</p>
+              <p class="hpc-video__date">${date}</p>
+            </div>
+          </div>`;
+        }).join('');
+      } catch {
+        container.innerHTML = '<div class="hpc-error">Unable to load videos — visit <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" style="color:var(--accent)">@hotpotcomedy</a> on YouTube.</div>';
+      }
+    })();
+  </script>
+</body>
+</html>
