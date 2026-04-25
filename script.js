@@ -150,44 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })();
 
-// Press / As Seen On carousel
-(function () {
-  const viewport = document.querySelector('.press-feat__viewport');
-  const grid     = document.querySelector('.press-feat__grid');
-  if (!grid || !viewport) return;
-
-  const cards = Array.from(grid.querySelectorAll('.press-feat__card'));
-  const total = cards.length;
-  let current = 0;
-
-  function cardW() { return viewport.offsetWidth; }
-
-  function goTo(n) {
-    current = ((n % total) + total) % total;
-    grid.style.transform = `translateX(-${current * cardW()}px)`;
-    document.querySelectorAll('.press-feat__dot').forEach((d, i) =>
-      d.classList.toggle('active', i === current));
-  }
-
-  // Recalculate on resize so pixel position stays correct
-  window.addEventListener('resize', () => goTo(current));
-
-  document.querySelector('.press-feat__nav--prev')
-    ?.addEventListener('click', () => goTo(current - 1));
-  document.querySelector('.press-feat__nav--next')
-    ?.addEventListener('click', () => goTo(current + 1));
-  document.querySelectorAll('.press-feat__dot').forEach(dot =>
-    dot.addEventListener('click', () => goTo(+dot.dataset.idx)));
-
-  // Touch swipe
-  let startX = 0;
-  viewport.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-  viewport.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
-  });
-})();
-
 // Newsletter signup form
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
