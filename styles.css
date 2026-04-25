@@ -684,6 +684,23 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
+/* ── Improv troupe link cards ── */
+.improv__links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+}
+
+/* ── Shows loading / empty state ── */
+.shows__loading,
+.shows__empty {
+  font-size: 13px;
+  color: var(--gray);
+  text-align: center;
+  padding: 24px 0;
+}
+
 /* ── Improv portrait background ── */
 .improv--portrait-bg {
   position: relative;
@@ -804,15 +821,15 @@ ul { list-style: none; }
 }
 .press-feat__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  max-width: 960px;
   margin: 0 auto;
 }
 .press-feat__card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(0,0,0,0.1);
+  background: var(--dark-2);
+  border: 1px solid rgba(255,255,255,0.08);
   text-decoration: none;
   color: inherit;
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
@@ -874,14 +891,14 @@ ul { list-style: none; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--black);
+  color: var(--white);
   margin-bottom: 12px;
   line-height: 1.3;
 }
 .press-feat__excerpt {
   font-size: 13px;
   line-height: 1.8;
-  color: #555;
+  color: rgba(255,255,255,0.55);
   margin-bottom: 20px;
   flex: 1;
 }
@@ -1232,6 +1249,7 @@ ul { list-style: none; }
   .about__shows { order: 3; }
 
   .improv__sources { grid-template-columns: 1fr; }
+  .improv__links   { grid-template-columns: 1fr; }
   .press-feat__grid { grid-template-columns: 1fr; }
   .press-feat__masthead { padding: 20px 24px; }
   .press-feat__pub-name { font-size: 26px; }
@@ -1453,9 +1471,11 @@ ul { list-style: none; }
 [data-theme="light"] .footer { background: #111; }
 
 /* Press card in light mode */
-[data-theme="light"] .press-feat__card { border-color: rgba(0,0,0,0.1); }
+[data-theme="light"] .press-feat__card { background: #fff; border-color: rgba(0,0,0,0.1); }
 [data-theme="light"] .press-feat__card:hover { border-color: var(--accent-dim); }
 [data-theme="light"] .press-feat__body { background: #fff; }
+[data-theme="light"] .press-feat__headline { color: var(--black); }
+[data-theme="light"] .press-feat__excerpt { color: #555; }
 [data-theme="light"] .press-feat__pdf-preview {
   background: rgba(0,0,0,0.03);
   border-color: rgba(0,0,0,0.07);
@@ -1470,6 +1490,14 @@ ul { list-style: none; }
 /* Improv section: portrait background always keeps dark card styles */
 [data-theme="light"] .improv--portrait-bg .section__title--light { color: var(--white); }
 [data-theme="light"] .improv--portrait-bg .section__label { color: var(--accent); }
+[data-theme="light"] .improv--portrait-bg .improv__card {
+  background: var(--dark);
+  border-color: rgba(255,255,255,0.06);
+}
+[data-theme="light"] .improv--portrait-bg .improv__card-title { color: var(--white); }
+[data-theme="light"] .improv--portrait-bg .improv__card-text  { color: rgba(255,255,255,0.5); }
+[data-theme="light"] .improv--portrait-bg .improv__card-icon  { color: var(--accent); }
+[data-theme="light"] .improv--portrait-bg .improv__card--linked:hover { background: var(--dark-2); border-color: var(--accent); }
 [data-theme="light"] .improv--portrait-bg .isrc {
   background: var(--dark);
   border-color: rgba(255,255,255,0.06);

@@ -175,25 +175,97 @@ if (newsletterForm) {
   }
 }
 
-// Contact form — stub handler
+// Contact form — posts to /api/contact (server.js handles SQLite + email)
 const form = document.getElementById('contactForm');
 if (form) {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
+    const btn      = form.querySelector('button[type="submit"]');
     const original = btn.textContent;
-    btn.textContent = 'Message Sent!';
-    btn.style.background = '#2ecc71';
-    btn.style.borderColor = '#2ecc71';
-    btn.style.color = '#fff';
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.style.background = '';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-      btn.disabled = false;
+
+    btn.textContent = 'Sending…';
+    btn.disabled    = true;
+
+    try {
+      const res = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          name:    form.name.value,
+          email:   form.email.value,
+          subject: form.subject.value,
+          message: form.message.value,
+        }),
+      });
+      if (!res.ok) throw new Error('server');
+
+      btn.textContent   = 'Message Sent!';
+      btn.style.cssText = 'background:#2ecc71;border-color:#2ecc71;color:#fff';
       form.reset();
-    }, 3000);
+      setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
+    } catch {
+      btn.textContent   = 'Error — Try Again';
+      btn.style.cssText = 'background:#c0392b;border-color:#c0392b;color:#fff';
+      setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
+    }
   });
 }
+
+// Upcoming shows — fetched from /api/shows (server proxies the Google Calendar ICS)
+(async function loadShows() {
+  const container = document.getElementById('showsList');
+  if (!container) return;
+
+  const MONTHS  = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const CAL_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+
+  function toGCalDate(iso) {
+    return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  }
+
+  try {
+    const res   = await fetch('/api/shows');
+    if (!res.ok) throw new Error('fetch');
+    const shows = await res.json();
+
+    if (!shows.length) {
+      container.innerHTML = '<p class="shows__empty">No upcoming shows. Check back soon!</p>';
+      return;
+    }
+
+    container.innerHTML = shows.map(show => {
+      const d      = new Date(show.start);
+      const month  = MONTHS[d.getMonth()];
+      const day    = d.getDate();
+      const time   = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      const endIso = show.end || new Date(d.getTime() + 7200000).toISOString();
+      const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE`
+        + `&text=${encodeURIComponent(show.title)}`
+        + `&dates=${toGCalDate(show.start)}/${toGCalDate(endIso)}`
+        + `&location=${encodeURIComponent(show.location)}`
+        + `&details=${encodeURIComponent(show.description)}`;
+      const sub = show.description ? show.description.split(/[\n\\n]/)[0] : '';
+
+      return `<div class="show__card">
+        <div class="show__card-date">
+          <span class="show__month">${month}</span>
+          <span class="show__day">${day}</span>
+        </div>
+        <div class="show__card-body">
+          <h4 class="show__card-title">${show.title}</h4>
+          ${sub ? `<p class="show__card-sub">${sub}</p>` : ''}
+          ${show.location ? `<p class="show__card-meta">${show.location}</p>` : ''}
+          <p class="show__card-meta">${time}</p>
+          <div class="show__card-actions">
+            ${show.url ? `<a href="${show.url}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>` : ''}
+            <a href="${calUrl}" target="_blank" rel="noopener" class="btn btn--ghost btn--sm btn--cal" title="Add to Google Calendar">
+              ${CAL_SVG} + Cal
+            </a>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch {
+    container.innerHTML = '<p class="shows__empty">Unable to load shows — check back soon!</p>';
+  }
+})();

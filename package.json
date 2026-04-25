@@ -1,0 +1,21 @@
+{
+  "name": "gsu-paek-site",
+  "version": "1.0.0",
+  "description": "G-Su Paek personal website server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "ical-expander": "^3.1.0",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
