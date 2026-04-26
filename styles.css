@@ -207,20 +207,29 @@ ul { list-style: none; }
 }
 .nav__dropdown {
   position: absolute;
-  top: calc(100% + 12px);
+  top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-4px);
   background: var(--dark-2);
   border: 1px solid rgba(255,255,255,0.1);
   min-width: 200px;
   list-style: none;
   padding: 6px 0;
+  margin-top: 12px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
-  transform: translateX(-50%) translateY(-6px);
   z-index: 200;
+}
+/* Invisible bridge so the mouse can travel from the link into the dropdown */
+.nav__dropdown::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 16px;
 }
 .nav__item--dropdown:hover .nav__dropdown {
   opacity: 1;
