@@ -621,16 +621,31 @@ ul { list-style: none; }
 }
 .improv__card-logo {
   display: block;
-  max-width: 180px;
-  max-height: 160px;
-  width: auto;
-  height: auto;
+  width: 180px;
+  height: 110px;
   object-fit: contain;
+  object-position: center;
   margin-bottom: 24px;
   background: #fff;
   padding: 12px 18px;
   border-radius: 4px;
+  flex-shrink: 0;
 }
+.improv__card-ticket {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: var(--accent);
+  padding: 8px 16px;
+  border-radius: 3px;
+  transition: background 0.2s, opacity 0.2s;
+}
+.improv__card-ticket:hover { background: var(--accent-dim); }
 .improv__card-title {
   font-family: var(--font-heading);
   font-size: 20px;

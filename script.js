@@ -286,6 +286,20 @@ async function loadShows() {
   }
 
   function renderShows(shows) {
+    // Update improv card ticket links from calendar data
+    [
+      { id: 'improv-ticket-ywa', match: /y.?all we asian/i },
+      { id: 'improv-ticket-tdb', match: /teenage dirtbag/i },
+    ].forEach(({ id, match }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const show = shows.find(s => match.test(s.title));
+      if (show) {
+        const url = resolveTicketUrl(show);
+        if (url) el.href = url;
+      }
+    });
+
     if (!shows.length) {
       container.innerHTML = '<p class="shows__empty">No upcoming shows. Check back soon!</p>';
       return;
