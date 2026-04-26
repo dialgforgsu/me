@@ -672,6 +672,12 @@ ul { list-style: none; }
   transition: opacity 0.2s;
 }
 .improv__card--linked:hover .improv__card-link { opacity: 1; }
+.improv__card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 
 /* ── Thumbnail hover panel ── */
 .improv__card-thumb {
