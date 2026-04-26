@@ -26,7 +26,7 @@
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+html { scroll-behavior: smooth; }
 body {
   background: var(--off-white);
   color: var(--black);
@@ -1683,11 +1683,7 @@ ul { list-style: none; }
 /* ============================================
    SCROLL SNAP
    ============================================ */
-.hero {
-  scroll-snap-align: start;
-}
 .section, .reel {
-  scroll-snap-align: start;
   scroll-margin-top: var(--nav-height);
 }
 
