@@ -14,7 +14,7 @@
       padding: calc(var(--nav-height) + 80px) 0 80px;
       background-image: url('images/G-Su-Paek-2373.jpg');
       background-size: cover;
-      background-position: center top;
+      background-position: center 25%;
       overflow: hidden;
     }
     .tech-hero::before {
@@ -156,7 +156,15 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="index.html#about" class="nav__link">About</a></li>
         <li><a href="index.html#shows" class="nav__link">Shows</a></li>
-        <li><a href="index.html#reel" class="nav__link">Reel</a></li>
+        <li class="nav__item--dropdown">
+          <a href="index.html#reel" class="nav__link nav__link--has-dropdown">Filmography
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="nav__dropdown">
+            <li><a href="index.html#press" class="nav__dropdown-link">As Seen On</a></li>
+            <li><a href="index.html#reel" class="nav__dropdown-link">Acting Reel</a></li>
+          </ul>
+        </li>
         <li class="nav__item--dropdown">
           <a href="index.html#improv" class="nav__link nav__link--has-dropdown">Comedy
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -249,7 +257,15 @@
         <nav class="footer__nav">
           <a href="index.html#about">About</a>
           <a href="index.html#shows">Shows</a>
-          <a href="index.html#reel">Reel</a>
+          <span class="footer__nav-dropdown">
+            <a href="index.html#reel" class="footer__nav-dropdown-trigger">Filmography
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <ul class="footer__nav-dropdown-menu">
+              <li><a href="index.html#press">As Seen On</a></li>
+              <li><a href="index.html#reel">Acting Reel</a></li>
+            </ul>
+          </span>
           <span class="footer__nav-dropdown">
             <a href="index.html#improv" class="footer__nav-dropdown-trigger">Comedy
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>

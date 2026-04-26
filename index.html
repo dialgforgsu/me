@@ -25,7 +25,15 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="#about" class="nav__link">About</a></li>
         <li><a href="#shows" class="nav__link">Shows</a></li>
-        <li><a href="#reel" class="nav__link">Reel</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#reel" class="nav__link nav__link--has-dropdown">Filmography
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="nav__dropdown">
+            <li><a href="#press" class="nav__dropdown-link">As Seen On</a></li>
+            <li><a href="#reel" class="nav__dropdown-link">Acting Reel</a></li>
+          </ul>
+        </li>
         <li class="nav__item--dropdown">
           <a href="#improv" class="nav__link nav__link--has-dropdown">Comedy
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -298,7 +306,7 @@
           <img src="images/HPC Logo.png" alt="Hot Pot Comedy" class="improv__card-logo improv__card-logo--hpc" />
           <h3 class="improv__card-title">Hot Pot Comedy</h3>
           <p class="improv__card-text">Live sets, sketches, and behind-the-scenes improv from one of Austin's hottest ensembles.</p>
-          <div class="improv__card-actions">
+          <div class="improv__card-actions improv__card-actions--col">
             <a href="hotpot.html" class="improv__card-link">Watch All Videos ↗</a>
             <a href="https://www.youtube.com/@hotpotcomedy?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Subscribe</a>
           </div>
@@ -391,7 +399,15 @@
         <nav class="footer__nav">
           <a href="#about">About</a>
           <a href="#shows">Shows</a>
-          <a href="#reel">Reel</a>
+          <span class="footer__nav-dropdown">
+            <a href="#reel" class="footer__nav-dropdown-trigger">Filmography
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <ul class="footer__nav-dropdown-menu">
+              <li><a href="#press">As Seen On</a></li>
+              <li><a href="#reel">Acting Reel</a></li>
+            </ul>
+          </span>
           <span class="footer__nav-dropdown">
             <a href="#improv" class="footer__nav-dropdown-trigger">Comedy
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
