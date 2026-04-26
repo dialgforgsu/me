@@ -513,26 +513,53 @@ ul { list-style: none; }
    ============================================ */
 .reel {
   position: relative;
-  height: 100vh;
   padding: 0;
   overflow: hidden;
   background: #000;
 }
-.reel__player-wrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
+
+/* Landscape: full-screen cover — video fills viewport, slight crop is fine */
+@media (orientation: landscape) {
+  .reel { height: 100vh; }
+  .reel__player-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .reel__player-wrap iframe,
+  #reelPlayer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: calc(100vh * 16 / 9);
+    height: calc(100vw * 9 / 16);
+  }
 }
-.reel__player-wrap iframe,
-#reelPlayer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
-  width: calc(100vh * 16 / 9);
-  height: calc(100vw * 9 / 16);
+
+/* Portrait: contain — video fits fully without cropping */
+@media (orientation: portrait) {
+  .reel { width: 100%; }
+  .reel__player-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .reel__player-wrap iframe,
+  #reelPlayer {
+    position: absolute !important;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: unset;
+    min-height: unset;
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
 }
 .reel__label-overlay {
   position: absolute;
