@@ -828,7 +828,7 @@ ul { list-style: none; }
 
 /* Y'all We Asian — Instagram embed card */
 .improv__card--ywa {
-  padding: 36px 32px;
+  padding: 48px 32px;
   display: flex;
   flex-direction: column;
   background: var(--dark);
