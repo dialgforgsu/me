@@ -171,7 +171,15 @@
         <li><a href="index.html#about" class="nav__link">About</a></li>
         <li><a href="index.html#shows" class="nav__link">Shows</a></li>
         <li><a href="index.html#reel" class="nav__link">Reel</a></li>
-        <li><a href="index.html#improv" class="nav__link">Improv</a></li>
+        <li class="nav__item--dropdown">
+          <a href="index.html#improv" class="nav__link nav__link--has-dropdown">Comedy
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="nav__dropdown">
+            <li><a href="https://www.instagram.com/yallweasian" target="_blank" rel="noopener" class="nav__dropdown-link">Y'all We Asian Improv</a></li>
+            <li><a href="hotpot.html" class="nav__dropdown-link">Hot Pot Comedy</a></li>
+          </ul>
+        </li>
         <li><a href="index.html#press" class="nav__link">Press</a></li>
         <li><a href="index.html#contact" class="nav__link">Contact</a></li>
       </ul>
@@ -237,6 +245,7 @@
     navToggle.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
       navToggle.setAttribute('aria-expanded', open);
+      nav.classList.toggle('menu-open', open);
       const spans = navToggle.querySelectorAll('span');
       if (open) {
         spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -249,6 +258,7 @@
     navLinks.querySelectorAll('.nav__link').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
+        nav.classList.remove('menu-open');
         navToggle.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
       });
     });

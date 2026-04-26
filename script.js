@@ -177,7 +177,7 @@ if (newsletterForm) {
   }
 }
 
-// Contact form — tries server, falls back to mailto (no Gmail config needed)
+// Contact form — Formspree
 const form = document.getElementById('contactForm');
 if (form) {
   form.addEventListener('submit', async e => {
@@ -192,27 +192,22 @@ if (form) {
     const subject = form.subject.value;
     const message = form.message.value.trim();
 
-    // Try server; if unavailable, open mailto as fallback
-    let serverOk = false;
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('https://formspree.io/f/mgorqnqy', {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body:    JSON.stringify({ name, email, subject, message }),
       });
-      if (res.ok) serverOk = true;
-    } catch (_) {}
-
-    if (!serverOk) {
-      const sub  = encodeURIComponent(`[Contact] ${subject || 'Message'} — ${name}`);
-      const body = encodeURIComponent(`From: ${name} <${email}>\n\n${message}`);
-      window.open(`mailto:gsu.paek@gmail.com?subject=${sub}&body=${body}`);
+      if (!res.ok) throw new Error();
+      btn.textContent   = 'Message Sent!';
+      btn.style.cssText = 'background:#2ecc71;border-color:#2ecc71;color:#fff';
+      form.reset();
+      setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
+    } catch {
+      btn.textContent   = 'Something went wrong — try again.';
+      btn.style.cssText = 'background:#e74c3c;border-color:#e74c3c;color:#fff';
+      setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
     }
-
-    btn.textContent   = 'Message Sent!';
-    btn.style.cssText = 'background:#2ecc71;border-color:#2ecc71;color:#fff';
-    form.reset();
-    setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
   });
 }
 
