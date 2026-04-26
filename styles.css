@@ -1026,14 +1026,16 @@ ul { list-style: none; }
 .film-card__bg {
   position: absolute;
   inset: 0;
+  background-size: cover;
+  background-position: center;
 }
-.film-card__bg--1 { background: linear-gradient(145deg, #1a2a1a 0%, #0d2b1a 100%); }
-.film-card__bg--2 { background: linear-gradient(145deg, #1a1a2e 0%, #0f1a3a 100%); }
-.film-card__bg--3 { background: linear-gradient(145deg, #2a1a1a 0%, #3a0f0f 100%); }
-.film-card__bg--4 { background: linear-gradient(145deg, #1a1a2a 0%, #2a1040 100%); }
-.film-card__bg--5 { background: linear-gradient(145deg, #1a2a2a 0%, #0d2e2e 100%); }
-.film-card__bg--6 { background: linear-gradient(145deg, #2a2010 0%, #3a2800 100%); }
-.film-card__bg--7 { background: linear-gradient(145deg, #101020 0%, #1a0a2a 100%); }
+.film-card__bg--1 { background-image: url('images/Movie%20Posters/Lucky%20Doug.png'); }
+.film-card__bg--2 { background-image: url('images/Movie%20Posters/Night%20On%20Sixth.png'); }
+.film-card__bg--3 { background-image: url('images/Movie%20Posters/Call%20Me%20Brother.jpg'); }
+.film-card__bg--4 { background-image: url('images/Movie%20Posters/Segs.jpg'); }
+.film-card__bg--5 { background-image: url('images/Movie%20Posters/Crunch%20Time.png'); }
+.film-card__bg--6 { background-image: url('images/Movie%20Posters/7%20Chinese%20Brothers.jpg'); }
+.film-card__bg--7 { background-image: url('images/Movie%20Posters/Somebody%20Up%20There%20Likes%20Me.png'); }
 .film-card__overlay {
   position: absolute;
   inset: 0;
@@ -1424,18 +1426,32 @@ ul { list-style: none; }
   border-bottom: 1px solid rgba(255,255,255,0.07);
   margin-bottom: 28px;
 }
+.footer__brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer__logo-icon {
+  display: inline-block;
+  width: 32px;
+  height: 38px;
+  flex-shrink: 0;
+  background-color: var(--white);
+  -webkit-mask: url('images/transparent-me.png') center / contain no-repeat;
+  mask: url('images/transparent-me.png') center / contain no-repeat;
+}
 .footer__name {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 22px;
   letter-spacing: 0.1em;
   color: var(--white);
 }
 .footer__tagline {
-  font-size: 12px;
-  letter-spacing: 0.15em;
+  font-size: 10px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gray);
-  margin-top: 4px;
+  margin-top: 3px;
 }
 .footer__nav {
   display: flex;
