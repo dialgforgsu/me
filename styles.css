@@ -1334,7 +1334,7 @@ ul { list-style: none; }
   inset: 0;
   background-image: url('images/23.jpg');
   background-size: cover;
-  background-position: center 30%;
+  background-position: 30% 30%;
   z-index: 0;
 }
 .contact--photo-bg::after {
