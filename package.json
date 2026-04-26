@@ -13,7 +13,7 @@
     "express": "^4.18.3",
     "ical-expander": "^3.1.0",
     "node-fetch": "^2.7.0",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^8.0.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
