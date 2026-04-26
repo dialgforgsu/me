@@ -70,6 +70,7 @@ const navLinks  = document.getElementById('navLinks');
 navToggle.addEventListener('click', () => {
   const open = navLinks.classList.toggle('open');
   navToggle.setAttribute('aria-expanded', open);
+  nav.classList.toggle('menu-open', open);
   // Animate hamburger → X
   const spans = navToggle.querySelectorAll('span');
   if (open) {
@@ -85,6 +86,7 @@ navToggle.addEventListener('click', () => {
 navLinks.querySelectorAll('.nav__link').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
+    nav.classList.remove('menu-open');
     const spans = navToggle.querySelectorAll('span');
     spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   });
@@ -175,39 +177,42 @@ if (newsletterForm) {
   }
 }
 
-// Contact form — posts to /api/contact (server.js handles SQLite + email)
+// Contact form — tries server, falls back to mailto (no Gmail config needed)
 const form = document.getElementById('contactForm');
 if (form) {
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn      = form.querySelector('button[type="submit"]');
     const original = btn.textContent;
-
     btn.textContent = 'Sending…';
     btn.disabled    = true;
 
+    const name    = form.name.value.trim();
+    const email   = form.email.value.trim();
+    const subject = form.subject.value;
+    const message = form.message.value.trim();
+
+    // Try server; if unavailable, open mailto as fallback
+    let serverOk = false;
     try {
       const res = await fetch('/api/contact', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          name:    form.name.value,
-          email:   form.email.value,
-          subject: form.subject.value,
-          message: form.message.value,
-        }),
+        body:    JSON.stringify({ name, email, subject, message }),
       });
-      if (!res.ok) throw new Error('server');
+      if (res.ok) serverOk = true;
+    } catch (_) {}
 
-      btn.textContent   = 'Message Sent!';
-      btn.style.cssText = 'background:#2ecc71;border-color:#2ecc71;color:#fff';
-      form.reset();
-      setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
-    } catch {
-      btn.textContent   = 'Error — Try Again';
-      btn.style.cssText = 'background:#c0392b;border-color:#c0392b;color:#fff';
-      setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
+    if (!serverOk) {
+      const sub  = encodeURIComponent(`[Contact] ${subject || 'Message'} — ${name}`);
+      const body = encodeURIComponent(`From: ${name} <${email}>\n\n${message}`);
+      window.open(`mailto:gsu.paek@gmail.com?subject=${sub}&body=${body}`);
     }
+
+    btn.textContent   = 'Message Sent!';
+    btn.style.cssText = 'background:#2ecc71;border-color:#2ecc71;color:#fff';
+    form.reset();
+    setTimeout(() => { btn.style.cssText = ''; btn.textContent = original; btn.disabled = false; }, 3000);
   });
 }
 
@@ -276,7 +281,13 @@ async function loadShows() {
     for (const rule of EVENTBRITE_URLS) {
       if (rule.match.test(show.title)) return rule.url;
     }
-    return show.url || '';
+    if (show.url) return show.url;
+    // Extract first URL from description (ticket links added in calendar event details)
+    if (show.description) {
+      const m = show.description.match(/https?:\/\/[^\s\n\\n<>"]+/);
+      if (m) return m[0];
+    }
+    return '';
   }
 
   function renderShows(shows) {

@@ -74,7 +74,7 @@
     }
     .hpc-videos {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(408px, 1fr));
       gap: 28px;
     }
     .hpc-video {
@@ -202,8 +202,8 @@
   <section class="hpc-grid">
     <div class="container">
       <div class="hpc-filter">
-        <button class="hpc-filter__btn active" data-order="asc">Oldest First</button>
-        <button class="hpc-filter__btn" data-order="desc">Latest First</button>
+        <button class="hpc-filter__btn" data-order="asc">Oldest First</button>
+        <button class="hpc-filter__btn active" data-order="desc">Latest First</button>
       </div>
       <div class="hpc-videos" id="hpcVideos">
         <div class="hpc-loading">Loading videos…</div>
@@ -335,7 +335,7 @@
           container.innerHTML = '<div class="hpc-error">No videos found.</div>';
           return;
         }
-        renderVideos('asc');
+        renderVideos('desc');
       } catch {
         container.innerHTML = '<div class="hpc-error">Unable to load videos — visit <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" style="color:var(--accent)">@hotpotcomedy</a> on YouTube.</div>';
       }
