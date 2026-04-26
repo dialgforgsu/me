@@ -139,9 +139,18 @@ ul { list-style: none; }
 }
 .nav.scrolled,
 .nav.menu-open {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+/* Use ::before for backdrop-filter so it doesn't trap fixed-position children (Safari) */
+.nav.scrolled::before,
+.nav.menu-open::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background: rgba(10, 10, 10, 0.96);
   backdrop-filter: blur(10px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
 }
 .nav__inner {
   display: flex;
@@ -1461,6 +1470,15 @@ ul { list-style: none; }
   }
   .nav__links .nav__link { font-size: 24px; letter-spacing: 0.15em; }
   .nav__toggle { display: flex; }
+  .nav__theme-toggle {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  [data-theme="light"] .nav__theme-toggle {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.7);
+  }
 
   /* Mobile dropdown — always visible inline */
   .nav__dropdown {
@@ -1591,8 +1609,11 @@ ul { list-style: none; }
    SCROLLED: white bg → use dark text */
 [data-theme="light"] .nav.scrolled,
 [data-theme="light"] .nav.menu-open {
-  background: rgba(255,255,255,0.96);
   box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+[data-theme="light"] .nav.scrolled::before,
+[data-theme="light"] .nav.menu-open::before {
+  background: rgba(255, 255, 255, 0.96);
 }
 [data-theme="light"] .nav.scrolled .nav__logo { color: #111; }
 [data-theme="light"] .nav.scrolled .nav__link { color: rgba(0,0,0,0.65); }
