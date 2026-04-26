@@ -82,11 +82,33 @@ navToggle.addEventListener('click', () => {
   }
 });
 
-// Close mobile nav when a link is clicked
-navLinks.querySelectorAll('.nav__link').forEach(link => {
+// Mobile: tap dropdown trigger to expand/collapse
+navLinks.querySelectorAll('.nav__item--dropdown').forEach(item => {
+  item.querySelector('.nav__link--has-dropdown').addEventListener('click', e => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      item.classList.toggle('open');
+    }
+  });
+});
+
+// Close mobile nav when a non-dropdown link is clicked
+navLinks.querySelectorAll('.nav__link:not(.nav__link--has-dropdown)').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
     nav.classList.remove('menu-open');
+    navLinks.querySelectorAll('.nav__item--dropdown').forEach(i => i.classList.remove('open'));
+    const spans = navToggle.querySelectorAll('span');
+    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  });
+});
+
+// Close mobile nav when a dropdown sub-link is clicked
+navLinks.querySelectorAll('.nav__dropdown-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    nav.classList.remove('menu-open');
+    navLinks.querySelectorAll('.nav__item--dropdown').forEach(i => i.classList.remove('open'));
     const spans = navToggle.querySelectorAll('span');
     spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   });
