@@ -12,11 +12,17 @@
     .tech-hero {
       position: relative;
       padding: calc(var(--nav-height) + 80px) 0 80px;
-      background-image: url('images/G-Su-Paek-2373.jpg');
-      background-size: 50%;
-      background-position: center 20%;
-      background-repeat: no-repeat;
       overflow: hidden;
+    }
+    .tech-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('images/G-Su-Paek-2373.jpg');
+      background-size: auto 200%;
+      background-position: center 15%;
+      background-repeat: no-repeat;
+      z-index: 0;
     }
     .tech-hero::before {
       content: '';
@@ -27,8 +33,9 @@
         rgba(0,0,0,0.6) 50%,
         rgba(0,0,0,0.8) 100%);
       pointer-events: none;
+      z-index: 1;
     }
-    .tech-hero .container { position: relative; z-index: 1; }
+    .tech-hero .container { position: relative; z-index: 2; }
     .tech-hero__back {
       display: inline-flex;
       align-items: center;
