@@ -18,7 +18,7 @@ const path         = require('path');
 const ICS_URL       = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
 const CALENDAR_JSON = path.join(__dirname, 'calendar.json');
 const CALENDAR_MD   = path.join(__dirname, 'calendar.md');
-const LOOKAHEAD_MS  = 180 * 24 * 3600 * 1000; // 180 days
+const LOOKAHEAD_MS  = 365 * 24 * 3600 * 1000; // 1 year
 const MAX_SHOWS     = 10;
 
 // ── Parse ─────────────────────────────────────────────────────────────────────

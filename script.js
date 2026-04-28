@@ -240,7 +240,7 @@ function _parseICSShows(text) {
   const comp  = new ICAL.Component(ICAL.parse(text));
   const now   = ICAL.Time.now();
   const limit = now.clone();
-  limit.addDuration(ICAL.Duration.fromSeconds(180 * 24 * 3600));
+  limit.addDuration(ICAL.Duration.fromSeconds(365 * 24 * 3600));
   const results = [];
 
   for (const vevent of comp.getAllSubcomponents('vevent')) {
@@ -275,7 +275,7 @@ function _parseICSShows(text) {
   return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, 5);
 }
 
-const _CACHE_KEY = 'gsupaek_shows_v2';
+const _CACHE_KEY = 'gsupaek_shows_v3';
 const _CACHE_TTL = 15 * 60 * 1000; // 15 minutes
 
 async function loadShows(forceRefresh) {
