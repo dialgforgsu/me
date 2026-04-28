@@ -301,7 +301,7 @@ async function loadShows() {
     if (show.url) return show.url;
     // Extract first URL from description (ticket links added in calendar event details)
     if (show.description) {
-      const m = show.description.match(/https?:\/\/[^\s\n\\n<>"]+/);
+      const m = show.description.match(/https?:\/\/[^\s<>"]+/);
       if (m) return m[0];
     }
     return '';
