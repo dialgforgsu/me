@@ -276,11 +276,12 @@ function _parseICSShows(text) {
   return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, 5);
 }
 
-async function loadShows() {
+const _CACHE_KEY = 'gsupaek_shows_v2';
+const _CACHE_TTL = 15 * 60 * 1000; // 15 minutes
+
+async function loadShows(forceRefresh) {
   const container = document.getElementById('showsList');
   if (!container) return;
-
-  container.innerHTML = '<p class="shows__loading">Loading shows…</p>';
 
   const MONTHS  = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   const CAL_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
@@ -299,7 +300,6 @@ async function loadShows() {
       if (rule.match.test(show.title)) return rule.url;
     }
     if (show.url) return show.url;
-    // Extract first URL from description (ticket links added in calendar event details)
     if (show.description) {
       const m = show.description.match(/https?:\/\/[^\s<>"]+/);
       if (m) return m[0];
@@ -308,7 +308,6 @@ async function loadShows() {
   }
 
   function renderShows(shows) {
-    // Update improv card ticket links from calendar data
     [
       { id: 'improv-ticket-ywa', match: /y.?all we asian/i },
       { id: 'improv-ticket-tdb', match: /teenage dirtbag/i },
@@ -360,12 +359,45 @@ async function loadShows() {
     }).join('');
   }
 
-  // Always fetch ICS directly via CORS proxy
+  function saveCache(shows) {
+    try {
+      localStorage.setItem(_CACHE_KEY, JSON.stringify({ ts: Date.now(), shows }));
+    } catch {}
+  }
+
+  // Tier 1: localStorage cache (skip if forceRefresh)
+  if (!forceRefresh) {
+    try {
+      const cached = JSON.parse(localStorage.getItem(_CACHE_KEY) || 'null');
+      if (cached && (Date.now() - cached.ts) < _CACHE_TTL && Array.isArray(cached.shows)) {
+        renderShows(cached.shows);
+        return;
+      }
+    } catch {}
+  }
+
+  container.innerHTML = '<p class="shows__loading">Loading shows…</p>';
+
+  // Tier 2: calendar.json (local file, fast, no CORS)
+  try {
+    const res  = await fetch('calendar.json?_=' + Date.now());
+    if (!res.ok) throw new Error('no calendar.json');
+    const data = await res.json();
+    if (Array.isArray(data.shows) && data.shows.length > 0) {
+      saveCache(data.shows);
+      renderShows(data.shows);
+      return;
+    }
+  } catch {}
+
+  // Tier 3: CORS proxy ICS fallback
   try {
     const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(_ICS_URL);
     const res   = await fetch(proxy);
     if (!res.ok) throw new Error('proxy');
-    renderShows(_parseICSShows(await res.text()));
+    const shows = _parseICSShows(await res.text());
+    saveCache(shows);
+    renderShows(shows);
   } catch {
     container.innerHTML = '<p class="shows__empty">Unable to load shows — check back soon!</p>';
   }
@@ -375,5 +407,5 @@ loadShows();
 
 document.getElementById('showsRefresh')?.addEventListener('click', function () {
   this.classList.add('spinning');
-  loadShows().finally(() => this.classList.remove('spinning'));
+  loadShows(true).finally(() => this.classList.remove('spinning'));
 });
