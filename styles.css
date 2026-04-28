@@ -1678,6 +1678,7 @@ ul { list-style: none; }
   .show__action { grid-column: 2; }
 
   .contact__grid { grid-template-columns: 1fr; gap: 48px; }
+  .contact--photo-bg::before { background-position: center 30%; }
 
   .footer__inner {
     flex-direction: column;
