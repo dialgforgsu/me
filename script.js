@@ -246,11 +246,10 @@ function _parseICSShows(text) {
   for (const vevent of comp.getAllSubcomponents('vevent')) {
     const ev = new ICAL.Event(vevent);
     if (ev.isRecurring()) {
-      const iter = ev.iterator();
+      const iter = ev.iterator(now);
       let next, count = 0;
-      while (count < 30 && (next = iter.next()) && next.compare(limit) <= 0) {
+      while (count < 10 && (next = iter.next()) && next.compare(limit) <= 0) {
         count++;
-        if (next.compare(now) < 0) continue;
         const det = ev.getOccurrenceDetails(next);
         results.push({
           title:       ev.summary || '',

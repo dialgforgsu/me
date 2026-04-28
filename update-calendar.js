@@ -3,126 +3,58 @@
 
 /**
  * update-calendar.js
- * Fetches the Google Calendar ICS, parses upcoming shows,
+ * Fetches the Google Calendar ICS, expands recurring events,
  * and writes calendar.json + calendar.md only when events change.
  *
  * Usage:   node update-calendar.js
- * Schedule (Windows Task Scheduler): run every 15 min
- * Schedule (Unix cron):  *\/15 * * * * node /path/to/update-calendar.js
+ * GitHub Actions: runs on schedule via .github/workflows/update-calendar.yml
  */
 
-const https    = require('https');
-const http     = require('http');
-const fs       = require('fs');
-const path     = require('path');
+const fetch        = require('node-fetch');
+const IcalExpander = require('ical-expander');
+const fs           = require('fs');
+const path         = require('path');
 
-const ICS_URL      = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
+const ICS_URL       = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
 const CALENDAR_JSON = path.join(__dirname, 'calendar.json');
 const CALENDAR_MD   = path.join(__dirname, 'calendar.md');
 const LOOKAHEAD_MS  = 180 * 24 * 3600 * 1000; // 180 days
 const MAX_SHOWS     = 10;
 
-// ── Fetch ─────────────────────────────────────────────────────────────────────
-
-function fetchUrl(rawUrl) {
-  return new Promise((resolve, reject) => {
-    const parsed = new URL(rawUrl);
-    const lib    = parsed.protocol === 'https:' ? https : http;
-    lib.get(rawUrl, { headers: { 'User-Agent': 'gsupaek-calendar-updater/1.0' } }, res => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return fetchUrl(res.headers.location).then(resolve).catch(reject);
-      }
-      if (res.statusCode < 200 || res.statusCode >= 300) {
-        return reject(new Error(`HTTP ${res.statusCode} for ${rawUrl}`));
-      }
-      let data = '';
-      res.setEncoding('utf8');
-      res.on('data', chunk => { data += chunk; });
-      res.on('end', () => resolve(data));
-    }).on('error', reject);
-  });
-}
-
-// ── ICS parsing ───────────────────────────────────────────────────────────────
-
-function unfoldICS(text) {
-  // ICS long lines are folded with CRLF + whitespace; unfold them
-  return text.replace(/\r?\n[ \t]/g, '');
-}
-
-function getField(block, key) {
-  // Matches KEY: or KEY;param=val: and returns the value
-  const m = block.match(new RegExp(`^${key}(?:;[^:]+)?:(.+)`, 'm'));
-  if (!m) return '';
-  return m[1].trim()
-    .replace(/\\n/g, '\n')
-    .replace(/\\,/g, ',')
-    .replace(/\\;/g, ';')
-    .replace(/\\\\/g, '\\');
-}
-
-function parseDateTime(raw) {
-  if (!raw) return null;
-  // Strip TZID prefix if present (e.g. value from DTSTART;TZID=America/Chicago:20260501T200000)
-  const val  = raw.includes(':') ? raw.split(':').pop() : raw;
-  const isUTC = val.endsWith('Z');
-  const m    = val.replace('Z', '').match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2}))?/);
-  if (!m) return null;
-  const [, y, mo, d, h = '00', mi = '00', s = '00'] = m;
-  const str = `${y}-${mo}-${d}T${h}:${mi}:${s}${isUTC ? 'Z' : ''}`;
-  return new Date(str);
-}
+// ── Parse ─────────────────────────────────────────────────────────────────────
 
 function parseICS(text) {
-  const unfolded = unfoldICS(text);
-  const now      = new Date();
-  const limit    = new Date(now.getTime() + LOOKAHEAD_MS);
-  const results  = [];
+  const now   = new Date();
+  const limit = new Date(now.getTime() + LOOKAHEAD_MS);
 
-  const veventRe = /BEGIN:VEVENT([\s\S]*?)END:VEVENT/g;
-  let match;
+  const expander = new IcalExpander({ ics: text, maxIterations: 500 });
+  const { events, occurrences } = expander.between(now, limit);
 
-  while ((match = veventRe.exec(unfolded)) !== null) {
-    const block = match[1];
+  const shows = [];
 
-    // Skip recurring events (RRULE) — ical.js in the browser handles those
-    if (/^RRULE:/m.test(block)) continue;
-
-    const summary  = getField(block, 'SUMMARY');
-    const dtstart  = getField(block, 'DTSTART(?:;TZID=[^:]+)?');
-    const dtend    = getField(block, 'DTEND(?:;TZID=[^:]+)?');
-    const location = getField(block, 'LOCATION');
-    const desc     = getField(block, 'DESCRIPTION');
-    const url      = getField(block, 'URL');
-
-    if (!summary) continue;
-
-    // Re-extract DTSTART with TZID variant
-    const dtstartRaw = (() => {
-      const m2 = block.match(/^DTSTART(?:;[^:]+)?:(.+)/m);
-      return m2 ? m2[1].trim() : '';
-    })();
-    const dtendRaw = (() => {
-      const m2 = block.match(/^DTEND(?:;[^:]+)?:(.+)/m);
-      return m2 ? m2[1].trim() : '';
-    })();
-
-    const start = parseDateTime(dtstartRaw);
-    if (!start || start < now || start > limit) continue;
-
-    const end = parseDateTime(dtendRaw);
-
-    results.push({
-      title:       summary,
-      start:       start.toISOString(),
-      end:         end ? end.toISOString() : null,
-      location:    location,
-      description: desc,
-      url:         url,
+  for (const ev of events) {
+    shows.push({
+      title:       ev.summary || '',
+      start:       ev.startDate.toJSDate().toISOString(),
+      end:         ev.endDate ? ev.endDate.toJSDate().toISOString() : null,
+      location:    ev.component.getFirstPropertyValue('location')    || '',
+      description: ev.component.getFirstPropertyValue('description') || '',
+      url:         ev.component.getFirstPropertyValue('url')         || '',
     });
   }
 
-  return results
+  for (const occ of occurrences) {
+    shows.push({
+      title:       occ.item.summary || '',
+      start:       occ.startDate.toJSDate().toISOString(),
+      end:         occ.endDate ? occ.endDate.toJSDate().toISOString() : null,
+      location:    occ.item.component.getFirstPropertyValue('location')    || '',
+      description: occ.item.component.getFirstPropertyValue('description') || '',
+      url:         occ.item.component.getFirstPropertyValue('url')         || '',
+    });
+  }
+
+  return shows
     .sort((a, b) => new Date(a.start) - new Date(b.start))
     .slice(0, MAX_SHOWS);
 }
@@ -141,8 +73,7 @@ function hasChanges(existing, fresh) {
 
 function writeMD(shows, updated) {
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-  const lines = [
+  const lines  = [
     '# G-Su Paek — Calendar Cache',
     `_Last updated: ${updated}_`,
     '',
@@ -170,14 +101,15 @@ function writeMD(shows, updated) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  // Load existing cache
   let existing = { updated: null, shows: [] };
   try { existing = JSON.parse(fs.readFileSync(CALENDAR_JSON, 'utf8')); } catch {}
 
   console.log('[calendar] Fetching ICS…');
   let icsText;
   try {
-    icsText = await fetchUrl(ICS_URL);
+    const res = await fetch(ICS_URL, { headers: { 'User-Agent': 'gsupaek-calendar-updater/1.0' } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    icsText = await res.text();
   } catch (err) {
     console.error('[calendar] Fetch failed:', err.message);
     process.exit(1);
