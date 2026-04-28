@@ -234,7 +234,8 @@ if (form) {
 }
 
 // Upcoming shows — tries server API first, falls back to direct ICS parse via CORS proxy
-const _ICS_URL = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
+const _ICS_URL   = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
+const MAX_SHOWS  = 5;
 
 function _parseICSShows(text) {
   const comp  = new ICAL.Component(ICAL.parse(text));
@@ -272,7 +273,7 @@ function _parseICSShows(text) {
       });
     }
   }
-  return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, 5);
+  return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, MAX_SHOWS);
 }
 
 const _CACHE_KEY = 'gsupaek_shows_v3';

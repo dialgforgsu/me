@@ -19,7 +19,7 @@ const ICS_URL       = 'https://calendar.google.com/calendar/ical/4973b08352caa62
 const CALENDAR_JSON = path.join(__dirname, 'calendar.json');
 const CALENDAR_MD   = path.join(__dirname, 'calendar.md');
 const LOOKAHEAD_MS  = 365 * 24 * 3600 * 1000; // 1 year
-const MAX_SHOWS     = 10;
+const MAX_SHOWS     = 5;
 
 // ── Parse ─────────────────────────────────────────────────────────────────────
 
