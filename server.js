@@ -42,6 +42,23 @@ let showsCache = { data: null, ts: 0 };
 const CACHE_TTL  = 5 * 60 * 1000;
 
 // ── Middleware ──────────────────────────────────────────────────────────
+app.set('trust proxy', 1);
+
+app.use((req, res, next) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
+  next();
+});
+
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.secure || req.headers['x-forwarded-proto'] === 'https') return next();
+    res.redirect(301, `https://${req.headers.host}${req.url}`);
+  });
+}
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
