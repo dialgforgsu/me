@@ -603,7 +603,8 @@ ul { list-style: none; }
   background: var(--dark);
   padding: 48px 32px;
   transition: background 0.3s, border-color 0.3s;
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
 }
 .improv__card--linked {
@@ -678,6 +679,7 @@ ul { list-style: none; }
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 .improv__card-actions--col {
   flex-direction: column;
