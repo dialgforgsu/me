@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tech — G-Su Paek</title>
-  <meta name="description" content="G-Su Paek's tech side — GitHub projects and professional LinkedIn profile." />
+  <title>Tech | G-Su Paek</title>
+  <meta name="description" content="G-Su Paek's tech side. GitHub projects and professional LinkedIn profile." />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'none'; connect-src 'self' https://zezigpysakremuredzwj.supabase.co; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'none'; connect-src 'self' https://api.counterapi.dev; object-src 'none'; base-uri 'self';" />
   <meta property="og:title" content="Tech | G-Su Paek" />
   <meta property="og:description" content="GitHub projects and professional profile from G-Su Paek." />
   <meta property="og:type" content="website" />
@@ -333,20 +333,25 @@
   </footer>
 
   <script>
-    // Visitor counter — Supabase
+    // Visitor counter — site-specific
     (function () {
       const el = document.getElementById('visit-text');
       if (!el) return;
-      const SUPABASE_URL  = 'https://zezigpysakremuredzwj.supabase.co';
-      const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplemlncHlzYWtyZW11cmVkendqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjkxMzAsImV4cCI6MjA5MzE0NTEzMH0.iH6DMmKH5e28TpnIezvyqn06m7LPyJGmB3bZLHi6Z0s';
-      fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_page_views`, {
-        method: 'POST',
-        headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json' },
-        body: '{}',
-      })
+      const NS  = 'gsupaek-me';
+      const seen = sessionStorage.getItem('gsp_me_counted');
+      const url  = seen
+        ? `https://api.counterapi.dev/v1/${NS}/visits`
+        : `https://api.counterapi.dev/v1/${NS}/visits/up`;
+      fetch(url)
         .then(r => r.ok ? r.json() : Promise.reject())
-        .then(count => { el.textContent = `${Number(count).toLocaleString()} visitor${count === 1 ? '' : 's'}`; })
-        .catch(() => { el.textContent = '— visitors'; });
+        .then(data => {
+          const n = data && (data.count ?? data.value);
+          if (n != null) {
+            el.textContent = `${Number(n).toLocaleString()} visitor${n === 1 ? '' : 's'}`;
+            sessionStorage.setItem('gsp_me_counted', '1');
+          }
+        })
+        .catch(() => { el.textContent = 'visitors'; });
     })();
 
     const html = document.documentElement;

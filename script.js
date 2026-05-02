@@ -148,27 +148,40 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 });
 
-// Visitor counter — Supabase
+// Visitor counter — site-specific, independent from other sites
 (function () {
   const el = document.getElementById('visit-text');
   if (!el) return;
-  const SUPABASE_URL  = 'https://zezigpysakremuredzwj.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplemlncHlzYWtyZW11cmVkendqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjkxMzAsImV4cCI6MjA5MzE0NTEzMH0.iH6DMmKH5e28TpnIezvyqn06m7LPyJGmB3bZLHi6Z0s';
-  fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_page_views`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_ANON,
-      'Authorization': `Bearer ${SUPABASE_ANON}`,
-      'Content-Type': 'application/json',
-    },
-    body: '{}',
-  })
+  const NS  = 'gsupaek-me';
+  const seen = sessionStorage.getItem('gsp_me_counted');
+  const url  = seen
+    ? `https://api.counterapi.dev/v1/${NS}/visits`
+    : `https://api.counterapi.dev/v1/${NS}/visits/up`;
+  fetch(url)
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(count => {
-      el.textContent = `${Number(count).toLocaleString()} visitor${count === 1 ? '' : 's'}`;
+    .then(data => {
+      const n = data && (data.count ?? data.value);
+      if (n != null) {
+        el.textContent = `${Number(n).toLocaleString()} visitor${n === 1 ? '' : 's'}`;
+        sessionStorage.setItem('gsp_me_counted', '1');
+      }
     })
-    .catch(() => { el.textContent = '— visitors'; });
+    .catch(() => { el.textContent = 'visitors'; });
 })();
+
+// Improv card click — whole card is a link, inner links still work independently
+document.querySelectorAll('.improv__card--linked[data-href]').forEach(card => {
+  card.addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;
+    const url    = card.dataset.href;
+    const target = card.dataset.target || '_self';
+    if (target === '_blank') {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.location.href = url;
+    }
+  });
+});
 
 // Newsletter signup form
 const newsletterForm = document.getElementById('newsletterForm');
