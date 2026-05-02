@@ -148,22 +148,24 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 });
 
-// Visitor counter — site-specific, independent from other sites
+// Visitor counter
 (function () {
   const el = document.getElementById('visit-text');
   if (!el) return;
-  const NS  = 'gsupaek-me';
+  const URL  = 'https://zezigpysakremuredzwj.supabase.co';
+  const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplemlncHlzYWtyZW11cmVkendqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjkxMzAsImV4cCI6MjA5MzE0NTEzMH0.iH6DMmKH5e28TpnIezvyqn06m7LPyJGmB3bZLHi6Z0s';
   const seen = sessionStorage.getItem('gsp_me_counted');
-  const url  = seen
-    ? `https://api.counterapi.dev/v1/${NS}/visits`
-    : `https://api.counterapi.dev/v1/${NS}/visits/up`;
-  fetch(url)
+  const fn   = seen ? 'get_page_views' : 'increment_page_views_for';
+  fetch(`${URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': KEY, 'Authorization': `Bearer ${KEY}` },
+    body: JSON.stringify({ page_id: 'me-site' }),
+  })
     .then(r => r.json())
-    .then(data => {
-      const n = data && (data.count ?? data.value);
-      if (n != null) {
-        el.textContent = `${Number(n).toLocaleString()} visitor${n === 1 ? '' : 's'}`;
-        sessionStorage.setItem('gsp_me_counted', '1');
+    .then(n => {
+      if (typeof n === 'number') {
+        el.textContent = `${n.toLocaleString()} visitor${n === 1 ? '' : 's'}`;
+        if (!seen) sessionStorage.setItem('gsp_me_counted', '1');
       }
     })
     .catch(() => {});

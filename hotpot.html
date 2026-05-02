@@ -6,7 +6,7 @@
   <title>Hot Pot Comedy Videos | G-Su Paek</title>
   <meta name="description" content="Hot Pot Comedy, sketch comedy served hot and delicious. Watch all videos from G-Su Paek's comedy troupe." />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: blob:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https://api.counterapi.dev https://api.allorigins.win https://www.youtube.com; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: blob:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https://zezigpysakremuredzwj.supabase.co https://api.allorigins.win https://www.youtube.com; object-src 'none'; base-uri 'self';" />
   <meta property="og:title" content="Hot Pot Comedy | G-Su Paek" />
   <meta property="og:description" content="Sketch comedy served hot & delicious. Watch all Hot Pot Comedy videos." />
   <meta property="og:type" content="website" />
@@ -320,22 +320,24 @@
   </footer>
 
   <script>
-    // Visitor counter — site-specific
+    // Visitor counter
     (function () {
       const el = document.getElementById('visit-text');
       if (!el) return;
-      const NS  = 'gsupaek-me';
+      const URL  = 'https://zezigpysakremuredzwj.supabase.co';
+      const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplemlncHlzYWtyZW11cmVkendqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjkxMzAsImV4cCI6MjA5MzE0NTEzMH0.iH6DMmKH5e28TpnIezvyqn06m7LPyJGmB3bZLHi6Z0s';
       const seen = sessionStorage.getItem('gsp_me_counted');
-      const url  = seen
-        ? `https://api.counterapi.dev/v1/${NS}/visits`
-        : `https://api.counterapi.dev/v1/${NS}/visits/up`;
-      fetch(url)
+      const fn   = seen ? 'get_page_views' : 'increment_page_views_for';
+      fetch(`${URL}/rest/v1/rpc/${fn}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': KEY, 'Authorization': `Bearer ${KEY}` },
+        body: JSON.stringify({ page_id: 'me-site' }),
+      })
         .then(r => r.json())
-        .then(data => {
-          const n = data && (data.count ?? data.value);
-          if (n != null) {
-            el.textContent = `${Number(n).toLocaleString()} visitor${n === 1 ? '' : 's'}`;
-            sessionStorage.setItem('gsp_me_counted', '1');
+        .then(n => {
+          if (typeof n === 'number') {
+            el.textContent = `${n.toLocaleString()} visitor${n === 1 ? '' : 's'}`;
+            if (!seen) sessionStorage.setItem('gsp_me_counted', '1');
           }
         })
         .catch(() => {});
