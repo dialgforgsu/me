@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ? `https://api.counterapi.dev/v1/${NS}/visits`
     : `https://api.counterapi.dev/v1/${NS}/visits/up`;
   fetch(url)
-    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(r => r.json())
     .then(data => {
       const n = data && (data.count ?? data.value);
       if (n != null) {
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.setItem('gsp_me_counted', '1');
       }
     })
-    .catch(() => { el.textContent = 'visitors'; });
+    .catch(() => {});
 })();
 
 // Improv card click — whole card is a link, inner links still work independently
