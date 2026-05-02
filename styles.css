@@ -1556,17 +1556,35 @@ ul { list-style: none; }
   font-size: 12px;
   color: rgba(255,255,255,0.2);
 }
-.footer__counter {
-  display: flex;
+/* ── Visitor counter pill ── */
+.visit-count {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: var(--font-heading);
   font-size: 11px;
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.32);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 4px 12px;
 }
-.footer__counter svg { flex-shrink: 0; opacity: 0.5; }
+.visit-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #3fb950;
+  flex-shrink: 0;
+  box-shadow: 0 0 4px rgba(63,185,80,0.6);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 3px rgba(63,185,80,0.5); }
+  50%       { box-shadow: 0 0 8px rgba(63,185,80,0.95); }
+}
 
 /* ============================================
    RESPONSIVE
@@ -1696,6 +1714,35 @@ ul { list-style: none; }
   .btn { width: 100%; max-width: 280px; }
   .press__logos { gap: 24px; }
 }
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  background: var(--accent);
+  color: var(--black);
+  padding: 10px 20px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.15s ease;
+}
+.skip-nav:focus { top: 0; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) { outline: none; }
 
 /* ============================================
    SCROLL SNAP
@@ -1939,4 +1986,17 @@ ul { list-style: none; }
 body, .nav, .improv__card, .press, .footer,
 .form__input, .btn, .show__card {
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .visit-dot { animation: none; }
 }

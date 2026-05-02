@@ -148,30 +148,26 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 });
 
-// Visitor counter
+// Visitor counter — Supabase
 (function () {
-  const countEl = document.getElementById('visitorCount');
-  if (!countEl) return;
-
-  const STORAGE_KEY = 'gsupaek_visited';
-  const alreadyCounted = sessionStorage.getItem(STORAGE_KEY);
-
-  const endpoint = alreadyCounted
-    ? 'https://api.counterapi.dev/v1/gsupaek-site/visits'
-    : 'https://api.counterapi.dev/v1/gsupaek-site/visits/up';
-
-  fetch(endpoint)
-    .then(r => r.json())
-    .then(data => {
-      const val = data && (data.count ?? data.value);
-      if (val != null) {
-        countEl.textContent = Number(val).toLocaleString();
-        sessionStorage.setItem(STORAGE_KEY, '1');
-      }
+  const el = document.getElementById('visit-text');
+  if (!el) return;
+  const SUPABASE_URL  = 'https://zezigpysakremuredzwj.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplemlncHlzYWtyZW11cmVkendqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjkxMzAsImV4cCI6MjA5MzE0NTEzMH0.iH6DMmKH5e28TpnIezvyqn06m7LPyJGmB3bZLHi6Z0s';
+  fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_page_views`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_ANON,
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'Content-Type': 'application/json',
+    },
+    body: '{}',
+  })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(count => {
+      el.textContent = `${Number(count).toLocaleString()} visitor${count === 1 ? '' : 's'}`;
     })
-    .catch(() => {
-      countEl.textContent = '—';
-    });
+    .catch(() => { el.textContent = '— visitors'; });
 })();
 
 // Newsletter signup form
