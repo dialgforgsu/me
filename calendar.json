@@ -1,14 +1,6 @@
 {
-  "updated": "2026-05-09T01:22:57.954Z",
+  "updated": "2026-05-09T04:46:49.738Z",
   "shows": [
-    {
-      "title": "Yola's Farewell Show [Improv]",
-      "start": "2026-05-09T01:00:00.000Z",
-      "end": "2026-05-09T02:30:00.000Z",
-      "location": "ColdTowne Theater, 1700 E 2nd St, Austin, TX 78702, USA",
-      "description": "<a href=\"https://www.coldtownetheater.com/show/yola-jean-lu/\">https://www.coldtownetheater.com/show/yola-jean-lu/</a>",
-      "url": ""
-    },
     {
       "title": "Comedy Comedy Festival Sketch Block [Host]",
       "start": "2026-05-10T16:30:00.000Z",
@@ -39,6 +31,14 @@
       "end": "2026-07-30T03:00:00.000Z",
       "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
       "description": "<a href=\"https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277\">https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277</a>",
+      "url": ""
+    },
+    {
+      "title": "Y'all We Asian Presents: Group Chat [Improv]",
+      "start": "2026-08-08T01:30:00.000Z",
+      "end": "2026-08-08T02:30:00.000Z",
+      "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
+      "description": "<a href=\"https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489\">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>",
       "url": ""
     }
   ]
