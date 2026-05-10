@@ -1,14 +1,6 @@
 {
-  "updated": "2026-05-10T17:13:31.871Z",
+  "updated": "2026-05-10T18:07:34.333Z",
   "shows": [
-    {
-      "title": "Comedy Comedy Festival Sketch Block [Host]",
-      "start": "2026-05-10T16:30:00.000Z",
-      "end": "2026-05-10T17:30:00.000Z",
-      "location": "",
-      "description": "",
-      "url": ""
-    },
     {
       "title": "Teenage Dirtbag [Improv]",
       "start": "2026-06-25T01:30:00.000Z",
@@ -39,6 +31,14 @@
       "end": "2026-08-08T02:30:00.000Z",
       "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
       "description": "<a href=\"https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489\">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>",
+      "url": ""
+    },
+    {
+      "title": "Teenage Dirtbag [Improv]",
+      "start": "2026-08-27T01:30:00.000Z",
+      "end": "2026-08-27T03:00:00.000Z",
+      "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
+      "description": "<a href=\"https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277\">https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277</a>",
       "url": ""
     }
   ]
