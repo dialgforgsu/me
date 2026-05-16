@@ -1,3 +1,25 @@
+# Environment & secrets
 .env
+
+# Dependencies
 node_modules/
+
+# Runtime data
 contacts.db
+*.db-journal
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Build / test output
+dist/
+coverage/
