@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hot Pot Comedy Videos | G-Su Paek</title>
-  <meta name="description" content="Hot Pot Comedy, sketch comedy served hot and delicious. Watch all videos from G-Su Paek's comedy troupe." />
+  <title>Improv Workshops | G-Su Paek</title>
+  <meta name="description" content="Professional improv workshops for corporate teams by G-Su Paek. Clients include Charles Schwab, Fidelity, and TD Ameritrade." />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: blob:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https://zezigpysakremuredzwj.supabase.co https://api.allorigins.win https://www.youtube.com; object-src 'none'; base-uri 'self';" />
-  <meta property="og:title" content="Hot Pot Comedy | G-Su Paek" />
-  <meta property="og:description" content="Sketch comedy served hot & delicious. Watch all Hot Pot Comedy videos." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'none'; connect-src 'self' https://zezigpysakremuredzwj.supabase.co; object-src 'none'; base-uri 'self';" />
+  <meta property="og:title" content="Improv Workshops | G-Su Paek" />
+  <meta property="og:description" content="Professional improv workshops for corporate teams. Trusted by Charles Schwab, Fidelity, and TD Ameritrade." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@dialgforgsu" />
@@ -19,26 +19,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .hpc-hero {
+    .ws-hero {
       position: relative;
-      padding: calc(var(--nav-height) + 80px) 0 80px;
-      background-image: url('images/hpc full.jpg');
-      background-size: cover;
-      background-position: center 30%;
+      padding: calc(var(--nav-height) + 100px) 0 100px;
+      background: var(--black);
       overflow: hidden;
     }
-    .hpc-hero::before {
+    .ws-hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.45) 0%,
-        rgba(0,0,0,0.55) 50%,
-        rgba(0,0,0,0.75) 100%);
-      z-index: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(255,60,0,0.08) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .hpc-hero .container { position: relative; z-index: 1; }
-    .hpc-hero__back {
+    .ws-hero .container { position: relative; z-index: 1; }
+    .ws-hero__back {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -46,122 +41,239 @@
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 36px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 40px;
       transition: color 0.2s;
     }
-    .hpc-hero__back:hover { color: var(--accent); }
-    .hpc-hero__icon { margin-bottom: 20px; }
-    .hpc-hero__logo {
-      display: block;
-      max-width: 220px;
-      height: auto;
-      background: #fff;
-      padding: 14px 20px;
-      border-radius: 6px;
-    }
-    .hpc-hero__title {
-      font-family: var(--font-display);
-      font-size: clamp(56px, 10vw, 108px);
-      color: var(--white);
-      line-height: 0.88;
-      margin-bottom: 20px;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.5);
-    }
-    .hpc-hero__sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-family: var(--font-heading);
-      margin-bottom: 32px;
-    }
-    .hpc-hero__actions { margin-top: 8px; }
-
-    .hpc-grid {
-      padding: 64px 0 100px;
-      background: var(--dark);
-    }
-    .hpc-videos {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(408px, 1fr));
-      gap: 28px;
-    }
-    .hpc-video {
-      background: var(--dark-2);
-      border: 1px solid rgba(255,255,255,0.06);
-      overflow: hidden;
-      transition: border-color 0.25s, transform 0.25s;
-    }
-    .hpc-video:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-    .hpc-video__embed {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-    }
-    .hpc-video__embed iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-    .hpc-video__info { padding: 18px 20px; }
-    .hpc-video__title {
-      font-family: var(--font-heading);
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--white);
-      line-height: 1.35;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .hpc-video__date {
-      font-size: 11px;
-      color: var(--gray);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-family: var(--font-heading);
-    }
-    .hpc-filter {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-    .hpc-filter__btn {
+    .ws-hero__back:hover { color: var(--accent); }
+    .ws-hero__label {
       font-family: var(--font-heading);
       font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .ws-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 12vw, 128px);
+      color: var(--white);
+      line-height: 0.88;
+      margin-bottom: 28px;
+    }
+    .ws-hero__sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.5);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Clients Section */
+    .ws-clients {
+      background: var(--dark);
+      padding: 80px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .ws-clients__label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .ws-clients__grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .ws-client-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 36px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-width: 200px;
+      min-height: 100px;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .ws-client-logo:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .ws-client-logo__wordmark {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .ws-client-logo--schwab .ws-client-logo__wordmark {
+      font-size: 22px;
+      color: #00a0df;
+    }
+    .ws-client-logo--schwab .ws-client-logo__wordmark span {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.35);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+    .ws-client-logo--fidelity .ws-client-logo__wordmark {
+      font-size: 26px;
+      color: #44a248;
+    }
+    .ws-client-logo--fidelity .ws-client-logo__wordmark span {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.35);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+    .ws-client-logo--tdameritrade .ws-client-logo__wordmark {
+      font-size: 17px;
+      color: #00c040;
+    }
+    .ws-client-logo--tdameritrade .ws-client-logo__wordmark span {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.35);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* What You Get Section */
+    .ws-about {
+      background: var(--black);
+      padding: 100px 0;
+    }
+    .ws-about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .ws-about__heading {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 72px);
+      color: var(--white);
+      line-height: 0.92;
+      margin-bottom: 28px;
+    }
+    .ws-about__body {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .ws-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .ws-pillar {
+      padding: 28px 32px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+    .ws-pillar__number {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .ws-pillar__title {
+      font-family: var(--font-heading);
+      font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 10px 20px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: transparent;
-      color: var(--gray);
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .hpc-filter__btn:hover { border-color: var(--accent); color: var(--white); }
-    .hpc-filter__btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
       color: var(--white);
+      margin-bottom: 8px;
     }
-    .hpc-loading, .hpc-error {
-      text-align: center;
-      padding: 80px 24px;
-      color: var(--gray);
-      font-family: var(--font-heading);
+    .ws-pillar__text {
       font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
     }
 
-    @media (max-width: 768px) {
-      .hpc-videos { grid-template-columns: 1fr; }
+    /* Rate & CTA */
+    .ws-cta {
+      background: var(--dark);
+      padding: 80px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .ws-cta__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .ws-cta__left {}
+    .ws-cta__label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .ws-cta__rate {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      color: var(--white);
+      line-height: 0.92;
+      margin-bottom: 12px;
+    }
+    .ws-cta__note {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      max-width: 420px;
+      line-height: 1.65;
+    }
+    .ws-cta__actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ws-venmo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      padding: 14px 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ws-venmo:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 900px) {
+      .ws-about__grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 600px) {
+      .ws-clients__grid { flex-direction: column; align-items: stretch; }
+      .ws-client-logo { min-width: unset; }
+      .ws-cta__inner { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -220,30 +332,95 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hpc-hero" id="main-content">
+  <section class="ws-hero" id="main-content">
     <div class="container">
-      <a href="index.html#improv" class="hpc-hero__back">
+      <a href="index.html#improv" class="ws-hero__back">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         Back to G-Su Paek
       </a>
-      <h1 class="hpc-hero__title">HOT POT<br>COMEDY</h1>
-      <div class="hpc-hero__actions">
-        <a href="https://www.youtube.com/@hotpotcomedy" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
-          Subscribe on YouTube ↗
-        </a>
+      <p class="ws-hero__label">Corporate &amp; Team Programs</p>
+      <h1 class="ws-hero__title">IMPROV<br>WORKSHOPS</h1>
+      <p class="ws-hero__sub">High-energy, professionally facilitated improv workshops designed to unlock communication, build trust, and get your team out of their heads and into the room.</p>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="ws-clients">
+    <div class="container">
+      <p class="ws-clients__label">Trusted by</p>
+      <div class="ws-clients__grid">
+
+        <div class="ws-client-logo ws-client-logo--schwab">
+          <div class="ws-client-logo__wordmark">
+            Charles Schwab
+            <span>Financial Services</span>
+          </div>
+        </div>
+
+        <div class="ws-client-logo ws-client-logo--fidelity">
+          <div class="ws-client-logo__wordmark">
+            Fidelity
+            <span>Investments</span>
+          </div>
+        </div>
+
+        <div class="ws-client-logo ws-client-logo--tdameritrade">
+          <div class="ws-client-logo__wordmark">
+            TD Ameritrade
+            <span>Financial Services</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- VIDEOS -->
-  <section class="hpc-grid">
+  <!-- ABOUT THE WORKSHOP -->
+  <section class="ws-about">
     <div class="container">
-      <div class="hpc-filter">
-        <button class="hpc-filter__btn active" data-order="desc">Latest First</button>
-        <button class="hpc-filter__btn" data-order="asc">Oldest First</button>
+      <div class="ws-about__grid">
+        <div>
+          <h2 class="ws-about__heading">WHY<br>IMPROV<br>WORKS</h2>
+          <p class="ws-about__body">Improv isn't just comedy — it's the fastest way to rewire how a team listens, responds, and creates together. G-Su has brought these workshops to some of the biggest names in finance, turning skeptical conference rooms into collaborative, energized teams.</p>
+          <p class="ws-about__body">No experience necessary. No judgment. Just a room full of people learning to say "yes, and" — and discovering how far that takes them.</p>
+        </div>
+        <div class="ws-pillars">
+          <div class="ws-pillar">
+            <p class="ws-pillar__number">01</p>
+            <p class="ws-pillar__title">Active Listening</p>
+            <p class="ws-pillar__text">Improv demands that you actually hear what's being said — not just wait for your turn. Teams come away more present in every conversation.</p>
+          </div>
+          <div class="ws-pillar">
+            <p class="ws-pillar__number">02</p>
+            <p class="ws-pillar__title">Adaptability</p>
+            <p class="ws-pillar__text">Nothing goes to plan on stage. These exercises build the muscle for pivoting gracefully when the unexpected hits — on stage or in a meeting room.</p>
+          </div>
+          <div class="ws-pillar">
+            <p class="ws-pillar__number">03</p>
+            <p class="ws-pillar__title">Psychological Safety</p>
+            <p class="ws-pillar__text">When people feel safe enough to be ridiculous together, they take bigger creative risks. That's the real product every workshop delivers.</p>
+          </div>
+        </div>
       </div>
-      <div class="hpc-videos" id="hpcVideos">
-        <div class="hpc-loading">Loading videos…</div>
+    </div>
+  </section>
+
+  <!-- RATE & CTA -->
+  <section class="ws-cta">
+    <div class="container">
+      <div class="ws-cta__inner">
+        <div class="ws-cta__left">
+          <p class="ws-cta__label">Pricing</p>
+          <p class="ws-cta__rate">RATE ON ASK</p>
+          <p class="ws-cta__note">Every team is different. Rates are tailored based on group size, session length, and format. Reach out to get a quote for your team.</p>
+        </div>
+        <div class="ws-cta__actions">
+          <a href="index.html#contact" class="btn btn--primary">Get a Quote</a>
+          <a href="https://venmo.com/u/G-Su-Paek" target="_blank" rel="noopener noreferrer" class="ws-venmo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 1.5h-15A3 3 0 001.5 4.5v15a3 3 0 003 3h15a3 3 0 003-3v-15a3 3 0 00-3-3zm-2.07 4.26c.33.54.48 1.1.48 1.82 0 2.26-1.93 5.2-3.5 7.27H10.7L9.24 7.34l3.2-.3.69 4.08c.65-1.07 1.46-2.75 1.46-3.9 0-.63-.11-1.05-.28-1.4l3.12-.06z"/></svg>
+            Venmo @G-Su-Paek
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -324,6 +501,5 @@
   </footer>
 
   <script src="page.js"></script>
-  <script src="hotpot.js"></script>
 </body>
 </html>
