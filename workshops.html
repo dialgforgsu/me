@@ -94,60 +94,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 28px 36px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 40px;
+      background: #fff;
       min-width: 200px;
       min-height: 100px;
-      transition: background 0.25s, border-color 0.25s;
+      transition: opacity 0.25s;
     }
-    .ws-client-logo:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.18);
-    }
-    .ws-client-logo__wordmark {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      line-height: 1.2;
-      text-align: center;
-    }
-    .ws-client-logo--schwab .ws-client-logo__wordmark {
-      font-size: 22px;
-      color: #00a0df;
-    }
-    .ws-client-logo--schwab .ws-client-logo__wordmark span {
+    .ws-client-logo:hover { opacity: 0.88; }
+    .ws-client-logo img {
+      max-width: 180px;
+      max-height: 56px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
       display: block;
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      color: rgba(255,255,255,0.35);
-      margin-top: 4px;
-      font-weight: 400;
-    }
-    .ws-client-logo--fidelity .ws-client-logo__wordmark {
-      font-size: 26px;
-      color: #44a248;
-    }
-    .ws-client-logo--fidelity .ws-client-logo__wordmark span {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      color: rgba(255,255,255,0.35);
-      margin-top: 4px;
-      font-weight: 400;
-    }
-    .ws-client-logo--tdameritrade .ws-client-logo__wordmark {
-      font-size: 17px;
-      color: #00c040;
-    }
-    .ws-client-logo--tdameritrade .ws-client-logo__wordmark span {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: rgba(255,255,255,0.35);
-      margin-top: 4px;
-      font-weight: 400;
     }
 
     /* What You Get Section */
@@ -350,25 +310,16 @@
       <p class="ws-clients__label">Trusted by</p>
       <div class="ws-clients__grid">
 
-        <div class="ws-client-logo ws-client-logo--schwab">
-          <div class="ws-client-logo__wordmark">
-            Charles Schwab
-            <span>Financial Services</span>
-          </div>
+        <div class="ws-client-logo">
+          <img src="images/Charles Schwab Logo.png" alt="Charles Schwab" />
         </div>
 
-        <div class="ws-client-logo ws-client-logo--fidelity">
-          <div class="ws-client-logo__wordmark">
-            Fidelity
-            <span>Investments</span>
-          </div>
+        <div class="ws-client-logo">
+          <img src="images/Fidelity Logo.png" alt="Fidelity" />
         </div>
 
-        <div class="ws-client-logo ws-client-logo--tdameritrade">
-          <div class="ws-client-logo__wordmark">
-            TD Ameritrade
-            <span>Financial Services</span>
-          </div>
+        <div class="ws-client-logo">
+          <img src="images/TD Ameritrade Logo.png" alt="TD Ameritrade" />
         </div>
 
       </div>
@@ -381,7 +332,7 @@
       <div class="ws-about__grid">
         <div>
           <h2 class="ws-about__heading">WHY<br>IMPROV<br>WORKS</h2>
-          <p class="ws-about__body">Improv isn't just comedy — it's the fastest way to rewire how a team listens, responds, and creates together. G-Su has brought these workshops to some of the biggest names in finance, turning skeptical conference rooms into collaborative, energized teams.</p>
+          <p class="ws-about__body">Improv isn't just comedy — it's the fastest way to rewire how a team listens, responds, and creates together. I've brought these workshops to some of the biggest names in finance, turning skeptical conference rooms into collaborative, energized teams.</p>
           <p class="ws-about__body">No experience necessary. No judgment. Just a room full of people learning to say "yes, and" — and discovering how far that takes them.</p>
         </div>
         <div class="ws-pillars">
