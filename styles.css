@@ -516,11 +516,14 @@ ul { list-style: none; }
   gap: 5px;
   padding: 10px 12px;
   font-size: 11px;
-}
-.btn--cal:hover {
   background: var(--black);
   border-color: var(--black);
   color: var(--white);
+}
+.btn--cal:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
 }
 
 /* ============================================
