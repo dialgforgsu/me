@@ -73,81 +73,77 @@
     .co-hero__sub {
       font-size: 17px;
       color: rgba(255,255,255,0.5);
-      max-width: 560px;
       line-height: 1.7;
     }
-
-    /* Rates Section */
-    .co-rates {
+    .co-hero__content {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .co-hero__text {
+      flex: 1;
+      min-width: 0;
+    }
+    .co-hero__rates {
+      flex-shrink: 0;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding-left: 52px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+      align-self: stretch;
+      justify-content: center;
+    }
+    .co-hero__rate {
       background: var(--dark);
-      padding: 80px 0;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .co-rates__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-    .co-rate-card {
-      background: var(--black);
-      padding: 52px 48px;
+      padding: 24px 28px;
       position: relative;
-      overflow: hidden;
     }
-    .co-rate-card::before {
+    .co-hero__rate::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
+      top: 0; left: 0; right: 0;
+      height: 2px;
       background: var(--accent);
     }
-    .co-rate-card--virtual::before {
-      background: rgba(255,255,255,0.2);
+    .co-hero__rate--virtual::before {
+      background: rgba(255,255,255,0.18);
     }
-    .co-rate-card__type {
+    .co-hero__rate-type {
       font-family: var(--font-heading);
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
-    .co-rate-card--virtual .co-rate-card__type {
-      color: rgba(255,255,255,0.5);
+    .co-hero__rate--virtual .co-hero__rate-type {
+      color: rgba(255,255,255,0.4);
     }
-    .co-rate-card__format {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 5vw, 60px);
-      color: var(--white);
-      line-height: 0.88;
-      margin-bottom: 20px;
-    }
-    .co-rate-card__price {
+    .co-hero__rate-price {
       display: flex;
       align-items: baseline;
       gap: 6px;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
-    .co-rate-card__amount {
+    .co-hero__rate-amount {
       font-family: var(--font-display);
-      font-size: clamp(52px, 8vw, 84px);
+      font-size: clamp(42px, 4vw, 52px);
       color: var(--white);
       line-height: 1;
     }
-    .co-rate-card__unit {
+    .co-hero__rate-unit {
       font-family: var(--font-heading);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-size: 11px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.35);
     }
-    .co-rate-card__desc {
-      font-size: 14px;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.65;
+    .co-hero__rate-desc {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.55;
     }
 
     /* About Coaching */
@@ -444,13 +440,22 @@
     }
 
     @media (max-width: 900px) {
-      .co-rates__grid { grid-template-columns: 1fr; }
       .co-about__grid { grid-template-columns: 1fr; gap: 48px; }
       .co-calc__body { grid-template-columns: 1fr; }
       .co-calc__result { position: static; }
+      .co-hero__content { flex-direction: column; align-items: flex-start; }
+      .co-hero__rates {
+        width: 100%;
+        flex-direction: row;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        padding-top: 40px;
+      }
+      .co-hero__rate { flex: 1; }
     }
     @media (max-width: 600px) {
-      .co-rate-card { padding: 40px 28px; }
+      .co-hero__rates { flex-direction: column; }
       .co-calc__result { padding: 32px 24px; }
       .co-payment__inner { flex-direction: column; align-items: flex-start; }
     }
@@ -518,37 +523,30 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         Back to G-Su Paek
       </a>
-      <p class="co-hero__label">For Improv Groups &amp; Teams</p>
-      <h1 class="co-hero__title">IMPROV<br>COACHING</h1>
-      <p class="co-hero__sub">I coach improv groups both in person and virtually — helping troupes sharpen their instincts, build ensemble trust, and find the fun in the fundamentals.</p>
-    </div>
-  </section>
-
-  <!-- RATES -->
-  <section class="co-rates">
-    <div class="container">
-      <div class="co-rates__grid">
-
-        <div class="co-rate-card co-rate-card--inperson">
-          <p class="co-rate-card__type">In Person</p>
-          <h2 class="co-rate-card__format">IN THE<br>ROOM</h2>
-          <div class="co-rate-card__price">
-            <span class="co-rate-card__amount">$10</span>
-            <span class="co-rate-card__unit">/ person / hr</span>
-          </div>
-          <p class="co-rate-card__desc">Live, in-person coaching sessions. Full-body, real-time feedback in a shared space. Best for troupes that can gather locally.</p>
+      <div class="co-hero__content">
+        <div class="co-hero__text">
+          <p class="co-hero__label">For Improv Groups &amp; Teams</p>
+          <h1 class="co-hero__title">IMPROV<br>COACHING</h1>
+          <p class="co-hero__sub">I coach improv groups both in person and virtually — helping troupes sharpen their instincts, build ensemble trust, and find the fun in the fundamentals.</p>
         </div>
-
-        <div class="co-rate-card co-rate-card--virtual">
-          <p class="co-rate-card__type">Virtual</p>
-          <h2 class="co-rate-card__format">ONLINE<br>SESSION</h2>
-          <div class="co-rate-card__price">
-            <span class="co-rate-card__amount">$5</span>
-            <span class="co-rate-card__unit">/ person / hr</span>
+        <div class="co-hero__rates">
+          <div class="co-hero__rate">
+            <p class="co-hero__rate-type">In Person</p>
+            <div class="co-hero__rate-price">
+              <span class="co-hero__rate-amount">$10</span>
+              <span class="co-hero__rate-unit">/ person / hr</span>
+            </div>
+            <p class="co-hero__rate-desc">Live, in-person coaching. Full-body, real-time feedback in a shared space.</p>
           </div>
-          <p class="co-rate-card__desc">Remote coaching via video call. Great for distributed troupes, recurring check-ins, or groups just getting started.</p>
+          <div class="co-hero__rate co-hero__rate--virtual">
+            <p class="co-hero__rate-type">Virtual</p>
+            <div class="co-hero__rate-price">
+              <span class="co-hero__rate-amount">$5</span>
+              <span class="co-hero__rate-unit">/ person / hr</span>
+            </div>
+            <p class="co-hero__rate-desc">Remote coaching via video call. Great for distributed troupes.</p>
+          </div>
         </div>
-
       </div>
     </div>
   </section>
