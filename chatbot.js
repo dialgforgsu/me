@@ -230,12 +230,12 @@
 
   // ── Main Menu ───────────────────────────────────────────
   var MAIN_MENU = [
-    { label: '👤 About G-Su',     action: 'bio'        },
-    { label: '🎬 Films & TV',     action: 'films'      },
-    { label: '🎭 Upcoming Shows', action: 'shows'      },
-    { label: '📍 Get Directions', action: 'directions' },
-    { label: '📱 Social Media',   action: 'socials'    },
-    { label: '✉️ Send a Message', action: 'contact'    },
+    { label: '👤 About G-Su',     action: 'bio'      },
+    { label: '🎬 Films & TV',     action: 'films'    },
+    { label: '🎭 Upcoming Shows', action: 'shows'    },
+    { label: '🎓 Coaching',       action: 'coaching' },
+    { label: '📱 Social Media',   action: 'socials'  },
+    { label: '✉️ Send a Message', action: 'contact'  },
   ];
 
   function showMainMenu() {
@@ -254,6 +254,7 @@
       case 'films':      return doFilms();
       case 'shows':      return doShows();
       case 'directions': return doDirections();
+      case 'coaching':   return doCoaching();
       case 'socials':    return doSocials();
       case 'contact':    return doContact();
       case 'press':      return doPress();
@@ -335,11 +336,43 @@
           });
         }
 
-        var qr = [{ label: '⬅ Main Menu', action: 'menu' }];
-        if (next.location) qr.unshift({ label: '📍 Get Directions', action: 'directions' });
+        var qr = [
+          { label: '📍 Get Directions', action: 'directions' },
+          { label: '⬅ Main Menu',       action: 'menu'       },
+        ];
 
         return addBotMsg(html, { typing: true, delay: 800 })
           .then(function () { return addBotMsg('', { quickReplies: qr }); });
+      });
+  }
+
+  function doCoaching() {
+    var ratesHtml =
+      '<p style="margin-bottom:12px"><strong>Improv Coaching — Group Rates:</strong></p>' +
+      '<div style="display:flex;flex-direction:column;gap:6px">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(255,60,0,0.12);border-left:3px solid #ff3c00">' +
+          '<span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.7">In Person</span>' +
+          '<span><strong style="font-size:20px">$10</strong><span style="font-size:11px;opacity:.5;margin-left:4px">/ person / hr</span></span>' +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(255,255,255,0.2)">' +
+          '<span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.7">Virtual</span>' +
+          '<span><strong style="font-size:20px">$5</strong><span style="font-size:11px;opacity:.5;margin-left:4px">/ person / hr</span></span>' +
+        '</div>' +
+      '</div>';
+
+    return addBotMsg(ratesHtml, { typing: true, delay: 700 })
+      .then(function () {
+        return addBotMsg(
+          '<p>Group rate — price scales per person and session length. ' +
+          'Open to long-term pricing for dedicated troupes.</p>' +
+          '<a href="coaching.html" target="_blank" rel="noopener" class="chatbot__link">Try the session cost calculator ↗</a>',
+          {
+            quickReplies: [
+              { label: '✉️ Book a Session', action: 'contact' },
+              { label: '⬅ Main Menu',       action: 'menu'    },
+            ]
+          }
+        );
       });
   }
 
@@ -422,8 +455,9 @@
     { re: /\b(film|movie|tv|television|series|credit|imdb|cast|act|screen|role|appear)\b/i,   action: 'films'      },
     { re: /\b(upcoming|next show|perform|improv|troupe|gig|event|calendar|schedule|when)\b/i, action: 'shows'      },
     { re: /\b(direction|where is|how (do i|to) get|map|venue|address|location|get there)\b/i, action: 'directions' },
+    { re: /\b(coach|coaching|lesson|teach|rate|fee|price|cost|how much|calculator)\b/i,       action: 'coaching'   },
     { re: /\b(social|instagram|twitter|youtube|linkedin|github|follow|@)\b/i,                  action: 'socials'    },
-    { re: /\b(contact|message|email|send|reach|booking|book|press|inquir|workshop|coach)\b/i, action: 'contact'    },
+    { re: /\b(contact|message|email|send|reach|booking|book|press|inquir|workshop)\b/i,       action: 'contact'    },
     { re: /\b(press|feature|deadline|bold journey|cbs|showcase|article)\b/i,                  action: 'press'      },
     { re: /\b(menu|back|home|main|start|option|help|what can you)\b/i,                        action: 'menu'       },
   ];
