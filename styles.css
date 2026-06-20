@@ -517,6 +517,11 @@ ul { list-style: none; }
   padding: 10px 12px;
   font-size: 11px;
 }
+.btn--cal:hover {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
 
 /* ============================================
    REEL — full-screen section
