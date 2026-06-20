@@ -2,6 +2,23 @@
    G-SU PAEK — script.js
    ============================================ */
 
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function safeUrl(url) {
+  if (!url) return '';
+  try {
+    const u = new URL(url);
+    return (u.protocol === 'http:' || u.protocol === 'https:') ? url : '';
+  } catch { return ''; }
+}
+
 // YouTube IFrame API — reel section autoplay on scroll
 ;(function () {
   var tag = document.createElement('script');
@@ -347,21 +364,21 @@ async function loadShows(forceRefresh) {
         + `&dates=${toGCalDate(show.start)}/${toGCalDate(endIso)}`
         + `&location=${encodeURIComponent(show.location)}`
         + `&details=${encodeURIComponent(show.description)}`;
-      const ticketUrl = resolveTicketUrl(show);
-      const sub       = show.description ? show.description.split(/[\n\\n]/)[0] : '';
+      const ticketUrl = safeUrl(resolveTicketUrl(show));
+      const sub       = show.description ? escHtml(show.description.split(/[\n\\n]/)[0]) : '';
       return `<div class="show__card">
         <div class="show__card-date">
           <span class="show__month">${month}</span>
           <span class="show__day">${day}</span>
         </div>
         <div class="show__card-body">
-          <h4 class="show__card-title">${show.title}</h4>
+          <h4 class="show__card-title">${escHtml(show.title)}</h4>
           ${sub ? `<p class="show__card-sub">${sub}</p>` : ''}
-          ${show.location ? `<p class="show__card-meta">${show.location}</p>` : ''}
+          ${show.location ? `<p class="show__card-meta">${escHtml(show.location)}</p>` : ''}
           <p class="show__card-meta">${time}</p>
           <div class="show__card-actions">
-            ${ticketUrl ? `<a href="${ticketUrl}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>` : ''}
-            <a href="${calUrl}" target="_blank" rel="noopener" class="btn btn--ghost btn--sm btn--cal" title="Add to Google Calendar">
+            ${ticketUrl ? `<a href="${escHtml(ticketUrl)}" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Tickets</a>` : ''}
+            <a href="${escHtml(calUrl)}" target="_blank" rel="noopener" class="btn btn--ghost btn--sm btn--cal" title="Add to Google Calendar">
               ${CAL_SVG} + Cal
             </a>
           </div>

@@ -1,6 +1,14 @@
 'use strict';
 require('dotenv').config();
 
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 const express      = require('express');
 const path         = require('path');
 const Database     = require('better-sqlite3');
@@ -88,12 +96,12 @@ app.post('/api/contact', async (req, res) => {
       html: `
         <h2 style="font-family:sans-serif;margin-bottom:16px">New Contact Form Submission</h2>
         <table style="font-family:sans-serif;border-collapse:collapse;font-size:14px">
-          <tr><td style="padding:4px 16px 4px 0;color:#666">Name</td><td><strong>${name}</strong></td></tr>
-          <tr><td style="padding:4px 16px 4px 0;color:#666">Email</td><td>${email}</td></tr>
-          <tr><td style="padding:4px 16px 4px 0;color:#666">Subject</td><td>${subject || '—'}</td></tr>
+          <tr><td style="padding:4px 16px 4px 0;color:#666">Name</td><td><strong>${escHtml(name)}</strong></td></tr>
+          <tr><td style="padding:4px 16px 4px 0;color:#666">Email</td><td>${escHtml(email)}</td></tr>
+          <tr><td style="padding:4px 16px 4px 0;color:#666">Subject</td><td>${escHtml(subject || '—')}</td></tr>
         </table>
         <p style="font-family:sans-serif;font-size:14px;margin-top:20px;line-height:1.6">
-          <strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}
+          <strong>Message:</strong><br>${escHtml(message).replace(/\n/g, '<br>')}
         </p>
       `,
     }).catch(err => console.error('[Email]', err.message));
