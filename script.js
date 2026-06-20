@@ -365,7 +365,8 @@ async function loadShows(forceRefresh) {
         + `&location=${encodeURIComponent(show.location)}`
         + `&details=${encodeURIComponent(show.description)}`;
       const ticketUrl = safeUrl(resolveTicketUrl(show));
-      const sub       = show.description ? escHtml(show.description.split(/[\n\\n]/)[0]) : '';
+      const plainDesc = show.description ? show.description.replace(/<[^>]*>/g, '').trim() : '';
+      const sub       = plainDesc && !/^https?:\/\//.test(plainDesc) ? escHtml(plainDesc.split(/[\n\\n]/)[0]) : '';
       return `<div class="show__card">
         <div class="show__card-date">
           <span class="show__month">${month}</span>
