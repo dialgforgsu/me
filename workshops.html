@@ -75,6 +75,18 @@
       max-width: 560px;
       line-height: 1.7;
     }
+    .ws-hero__content {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .ws-hero__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex-shrink: 0;
+    }
 
     /* Clients Section */
     .ws-clients {
@@ -174,47 +186,6 @@
       line-height: 1.65;
     }
 
-    /* Rate & CTA */
-    .ws-cta {
-      background: var(--dark);
-      padding: 80px 0;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .ws-cta__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .ws-cta__left {}
-    .ws-cta__label {
-      font-family: var(--font-heading);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-    .ws-cta__rate {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 5vw, 56px);
-      color: var(--white);
-      line-height: 0.92;
-      margin-bottom: 12px;
-    }
-    .ws-cta__note {
-      font-size: 14px;
-      color: rgba(255,255,255,0.4);
-      max-width: 420px;
-      line-height: 1.65;
-    }
-    .ws-cta__actions {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
     .ws-venmo {
       display: inline-flex;
       align-items: center;
@@ -237,11 +208,11 @@
 
     @media (max-width: 900px) {
       .ws-about__grid { grid-template-columns: 1fr; gap: 48px; }
+      .ws-hero__content { flex-direction: column; align-items: flex-start; gap: 32px; }
     }
     @media (max-width: 600px) {
       .ws-clients__grid { flex-direction: column; align-items: stretch; }
       .ws-client-logo { min-width: unset; }
-      .ws-cta__inner { flex-direction: column; align-items: flex-start; }
     }
 
   </style>
@@ -307,22 +278,13 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         Back to G-Su Paek
       </a>
-      <p class="ws-hero__label">Corporate &amp; Team Programs</p>
-      <h1 class="ws-hero__title">IMPROV<br>WORKSHOPS</h1>
-      <p class="ws-hero__sub">High-energy, professionally facilitated improv workshops designed to unlock communication, build trust, and get your team out of their heads and into the room.</p>
-    </div>
-  </section>
-
-  <!-- RATE & CTA -->
-  <section class="ws-cta">
-    <div class="container">
-      <div class="ws-cta__inner">
-        <div class="ws-cta__left">
-          <p class="ws-cta__label">Pricing</p>
-          <p class="ws-cta__rate">RATE ON ASK</p>
-          <p class="ws-cta__note">Every team is different. Rates are tailored based on group size, session length, and format. Reach out to get a quote for your team.</p>
+      <div class="ws-hero__content">
+        <div class="ws-hero__text">
+          <p class="ws-hero__label">Corporate &amp; Team Programs</p>
+          <h1 class="ws-hero__title">IMPROV<br>WORKSHOPS</h1>
+          <p class="ws-hero__sub">High-energy, professionally facilitated improv workshops designed to unlock communication, build trust, and get your team out of their heads and into the room.</p>
         </div>
-        <div class="ws-cta__actions">
+        <div class="ws-hero__actions">
           <a href="index.html#contact" class="btn btn--primary">Get a Quote</a>
           <a href="https://venmo.com/u/G-Su-Paek" target="_blank" rel="noopener noreferrer" class="ws-venmo">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 1.5h-15A3 3 0 001.5 4.5v15a3 3 0 003 3h15a3 3 0 003-3v-15a3 3 0 00-3-3zm-2.07 4.26c.33.54.48 1.1.48 1.82 0 2.26-1.93 5.2-3.5 7.27H10.7L9.24 7.34l3.2-.3.69 4.08c.65-1.07 1.46-2.75 1.46-3.9 0-.63-.11-1.05-.28-1.4l3.12-.06z"/></svg>
