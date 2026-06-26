@@ -167,8 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Visitor counter
 (function () {
-  const el = document.getElementById('visit-text');
-  if (!el) return;
+  const el      = document.getElementById('visit-text');
+  const wrapper = document.getElementById('visit-count');
+  if (!el || !wrapper) return;
   const URL  = 'https://zezigpysakremuredzwj.supabase.co';
   const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplemlncHlzYWtyZW11cmVkendqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjkxMzAsImV4cCI6MjA5MzE0NTEzMH0.iH6DMmKH5e28TpnIezvyqn06m7LPyJGmB3bZLHi6Z0s';
   const seen = sessionStorage.getItem('gsp_me_counted');
@@ -182,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(n => {
       if (typeof n === 'number') {
         el.textContent = `${n.toLocaleString()} visitor${n === 1 ? '' : 's'}`;
+        wrapper.removeAttribute('hidden');
         if (!seen) sessionStorage.setItem('gsp_me_counted', '1');
       }
     })
@@ -428,7 +430,7 @@ async function loadShows(forceRefresh) {
     saveCache(shows);
     renderShows(shows);
   } catch {
-    container.innerHTML = '<p class="shows__empty">Unable to load shows — check back soon!</p>';
+    container.innerHTML = '<p class="shows__empty">Shows update frequently — <a href="https://www.falloutatx.com/calendar" target="_blank" rel="noopener noreferrer">check the Fallout Theater calendar</a> for the latest.</p>';
   }
 }
 
