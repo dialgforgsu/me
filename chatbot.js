@@ -35,6 +35,23 @@
   var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
+  var TICKET_URLS = [
+    { match: /y.?all we asian/i, url: 'https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489' },
+    { match: /teenage dirtbag/i, url: 'https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277' },
+  ];
+
+  function resolveTicketUrl(show) {
+    for (var i = 0; i < TICKET_URLS.length; i++) {
+      if (TICKET_URLS[i].match.test(show.title)) return TICKET_URLS[i].url;
+    }
+    if (show.url) return show.url;
+    if (show.description) {
+      var m = show.description.match(/https?:\/\/[^\s<>"]+/);
+      if (m) return m[0];
+    }
+    return '';
+  }
+
   function escHtml(s) {
     return String(s)
       .replace(/&/g, '&amp;')
@@ -316,22 +333,26 @@
           );
         }
 
-        var next = shows[0];
+        var next       = shows[0];
+        var nextTicket = resolveTicketUrl(next);
         var html =
           '<p><strong>Next up:</strong></p>' +
           '<div class="chatbot__show-card">' +
             '<div class="chatbot__show-title">' + escHtml(next.title) + '</div>' +
             '<div class="chatbot__show-meta">📅 ' + fmtDate(next.start) + '</div>' +
             (next.location ? '<div class="chatbot__show-meta">📍 ' + escHtml(next.location) + '</div>' : '') +
+            (nextTicket ? '<a href="' + escHtml(nextTicket) + '" target="_blank" rel="noopener noreferrer" class="chatbot__btn" style="margin-top:10px">🎟 Get Tickets</a>' : '') +
           '</div>';
 
         if (shows.length > 1) {
           html += '<p style="margin-top:10px"><strong>Also coming up:</strong></p>';
           shows.slice(1, 4).forEach(function (s) {
+            var ticketUrl = resolveTicketUrl(s);
             html +=
               '<div class="chatbot__show-mini">' +
                 '<span class="chatbot__show-mini-title">' + escHtml(s.title) + '</span>' +
                 '<span class="chatbot__show-mini-date">' + fmtDate(s.start) + '</span>' +
+                (ticketUrl ? '<a href="' + escHtml(ticketUrl) + '" target="_blank" rel="noopener noreferrer" class="chatbot__link" style="font-size:11px;margin-top:2px">Tickets ↗</a>' : '') +
               '</div>';
           });
         }
