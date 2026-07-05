@@ -19,7 +19,7 @@
       const videoId   = (videoIdRx.exec(block)  || [])[1] || '';
       const title     = (titleRx.exec(block)     || [])[1] || '';
       const published = (publishedRx.exec(block) || [])[1] || '';
-      if (videoId) results.push({ videoId, title, published });
+      if (videoId && /^[\w-]{5,20}$/.test(videoId)) results.push({ videoId, title, published });
     }
     return results;
   }
@@ -35,6 +35,8 @@
     return await res.text();
   }
 
+  // escHtml comes from utils.js, loaded before this script.
+
   function renderVideos(order) {
     const sorted = [...allEntries].sort((a, b) => {
       const diff = new Date(a.published) - new Date(b.published);
@@ -44,15 +46,18 @@
       const date  = new Date(v.published).toLocaleDateString('en-US', {
         year: 'numeric', month: 'short', day: 'numeric',
       });
-      const title = v.title
+      // v.title comes from the RSS XML already HTML-escaped (e.g. "&amp;");
+      // decode entities to get the plain title, then re-escape for safe HTML insertion.
+      const plainTitle = v.title
         .replace(/&amp;/g, '&')
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>');
+      const title = escHtml(plainTitle);
       return `<div class="hpc-video">
         <div class="hpc-video__embed">
           <iframe
             src="https://www.youtube-nocookie.com/embed/${v.videoId}?rel=0&modestbranding=1"
-            title="${title.replace(/"/g, '&quot;')}"
+            title="${title}"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
             loading="lazy">

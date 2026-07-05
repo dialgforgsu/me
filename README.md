@@ -16,4 +16,4 @@ Source for [gsupaek.com](https://gsupaek.com). Actor, improviser, tech guy.
 
 A GitHub Actions workflow runs every 15 minutes, fetches the private Google Calendar ICS, expands recurring events, and commits the top 5 upcoming shows to `calendar.json` if anything changed.
 
-The browser loads shows via a 3-tier fallback: localStorage cache (15-min TTL) → `calendar.json` → CORS proxy to raw ICS parsed with ical.js.
+The browser loads shows via a 2-tier fallback: localStorage cache (15-min TTL) → `calendar.json`. The private ICS URL itself is never sent to the browser — it lives only in the `CALENDAR_ICS_URL` GitHub Actions secret / server-side `.env`.

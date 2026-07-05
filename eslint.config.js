@@ -9,8 +9,11 @@ module.exports = [
       globals: {
         ...globals.browser,
         ...globals.node,
-        YT:   'readonly', // YouTube IFrame API (loaded dynamically in script.js)
-        ICAL: 'readonly', // ical.js loaded from CDN in index.html
+        YT:              'readonly', // YouTube IFrame API (loaded dynamically in script.js)
+        escHtml:         'readonly', // utils.js, loaded before script.js / chatbot.js / hotpot.js
+        safeUrl:         'readonly', // utils.js
+        TICKET_URLS:     'readonly', // utils.js
+        resolveTicketUrl: 'readonly', // utils.js
       },
       ecmaVersion: 2021,
       sourceType: 'script',

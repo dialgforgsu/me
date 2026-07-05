@@ -17,7 +17,7 @@
     "express": "^4.18.3",
     "ical-expander": "^3.1.0",
     "node-fetch": "^2.7.0",
-    "nodemailer": "^8.0.5"
+    "nodemailer": "^9.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

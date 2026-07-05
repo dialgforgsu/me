@@ -1,23 +1,7 @@
 /* ============================================
    G-SU PAEK — script.js
+   (escHtml / safeUrl / resolveTicketUrl come from utils.js, loaded first)
    ============================================ */
-
-function escHtml(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-function safeUrl(url) {
-  if (!url) return '';
-  try {
-    const u = new URL(url);
-    return (u.protocol === 'http:' || u.protocol === 'https:') ? url : '';
-  } catch { return ''; }
-}
 
 // YouTube IFrame API — reel section autoplay on scroll
 ;(function () {
@@ -263,49 +247,7 @@ if (form) {
   });
 }
 
-// Upcoming shows — tries server API first, falls back to direct ICS parse via CORS proxy
-const _ICS_URL   = 'https://calendar.google.com/calendar/ical/4973b08352caa62ecc8fe9e9106a62786587da67d9774285d39c27911754213e%40group.calendar.google.com/private-d8a8ffc18a5c2610ef33d0b0893d8e32/basic.ics';
-const MAX_SHOWS  = 5;
-
-function _parseICSShows(text) {
-  const comp  = new ICAL.Component(ICAL.parse(text));
-  const now   = ICAL.Time.now();
-  const limit = now.clone();
-  limit.addDuration(ICAL.Duration.fromSeconds(365 * 24 * 3600));
-  const results = [];
-
-  for (const vevent of comp.getAllSubcomponents('vevent')) {
-    const ev = new ICAL.Event(vevent);
-    if (ev.isRecurring()) {
-      const iter = ev.iterator(now);
-      let next, count = 0;
-      while (count < 10 && (next = iter.next()) && next.compare(limit) <= 0) {
-        count++;
-        const det = ev.getOccurrenceDetails(next);
-        results.push({
-          title:       ev.summary || '',
-          start:       next.toJSDate().toISOString(),
-          end:         det.endDate ? det.endDate.toJSDate().toISOString() : null,
-          location:    vevent.getFirstPropertyValue('location') || '',
-          description: vevent.getFirstPropertyValue('description') || '',
-          url:         vevent.getFirstPropertyValue('url') || '',
-        });
-      }
-    } else {
-      if (ev.startDate.compare(now) < 0) continue;
-      results.push({
-        title:       ev.summary || '',
-        start:       ev.startDate.toJSDate().toISOString(),
-        end:         ev.endDate ? ev.endDate.toJSDate().toISOString() : null,
-        location:    vevent.getFirstPropertyValue('location') || '',
-        description: vevent.getFirstPropertyValue('description') || '',
-        url:         vevent.getFirstPropertyValue('url') || '',
-      });
-    }
-  }
-  return results.sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, MAX_SHOWS);
-}
-
+// Upcoming shows — served from calendar.json (kept fresh by a GitHub Actions cron)
 const _CACHE_KEY = 'gsupaek_shows_v3';
 const _CACHE_TTL = 15 * 60 * 1000; // 15 minutes
 
@@ -318,23 +260,6 @@ async function loadShows(forceRefresh) {
 
   function toGCalDate(iso) {
     return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  }
-
-  const EVENTBRITE_URLS = [
-    { match: /y.?all we asian/i,    url: 'https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489' },
-    { match: /teenage dirtbag/i,    url: 'https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277' },
-  ];
-
-  function resolveTicketUrl(show) {
-    for (const rule of EVENTBRITE_URLS) {
-      if (rule.match.test(show.title)) return rule.url;
-    }
-    if (show.url) return show.url;
-    if (show.description) {
-      const m = show.description.match(/https?:\/\/[^\s<>"]+/);
-      if (m) return m[0];
-    }
-    return '';
   }
 
   function renderShows(shows) {
@@ -421,17 +346,8 @@ async function loadShows(forceRefresh) {
     }
   } catch {}
 
-  // Tier 3: CORS proxy ICS fallback
-  try {
-    const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(_ICS_URL);
-    const res   = await fetch(proxy);
-    if (!res.ok) throw new Error('proxy');
-    const shows = _parseICSShows(await res.text());
-    saveCache(shows);
-    renderShows(shows);
-  } catch {
-    container.innerHTML = '<p class="shows__empty">Shows update frequently — <a href="https://www.falloutatx.com/calendar" target="_blank" rel="noopener noreferrer">check the Fallout Theater calendar</a> for the latest.</p>';
-  }
+  // Fallback: calendar.json unavailable
+  container.innerHTML = '<p class="shows__empty">Shows update frequently — <a href="https://www.falloutatx.com/calendar" target="_blank" rel="noopener noreferrer">check the Fallout Theater calendar</a> for the latest.</p>';
 }
 
 loadShows();

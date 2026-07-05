@@ -68,6 +68,16 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(express.json());
+
+// Block server-only files from ever being served as static assets
+// (contacts.db holds submitter PII; these others are config/source, not public assets).
+const STATIC_DENYLIST = /\.(db|db-journal|env(\.\w+)?)$|^(server\.js|update-calendar\.js|package\.json|package-lock\.json|eslint\.config\.js)$/i;
+app.use((req, res, next) => {
+  const basename = path.basename(req.path);
+  if (STATIC_DENYLIST.test(basename)) return res.status(404).end();
+  next();
+});
+
 app.use(express.static(path.join(__dirname)));
 
 // ── POST /api/contact ───────────────────────────────────────────────────

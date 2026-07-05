@@ -912,7 +912,7 @@ ul { list-style: none; }
 /* ── Improv portrait background ── */
 .improv--portrait-bg {
   position: relative;
-  background-image: url('images/portrait1.png');
+  background-image: url('images/portrait1.webp');
   background-size: cover;
   background-position: center top;
 }
@@ -1149,7 +1149,7 @@ ul { list-style: none; }
 }
 
 /* Per-card background images */
-.press-feat__card--resume      { background-image: url('images/kidg.jpg');          background-position: center 15%; }
+.press-feat__card--resume      { background-image: url('images/kidg.webp');         background-position: center 15%; }
 .press-feat__card--cbs         { background-image: url('images/CBS HS2.jpg');       background-position: center top; }
 .press-feat__card--boldjourney { background-image: url('images/Red Carpet HS.jpg'); background-position: center top; }
 
@@ -1345,7 +1345,7 @@ ul { list-style: none; }
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('images/23.jpg');
+  background-image: url('images/23.webp');
   background-size: cover;
   background-position: left 30%;
   z-index: 0;
