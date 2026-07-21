@@ -1045,13 +1045,13 @@ ul { list-style: none; }
   background-size: cover;
   background-position: center;
 }
-.film-card__bg--1 { background-image: url('images/Movie%20Posters/Lucky%20Doug.png'); }
-.film-card__bg--2 { background-image: url('images/Movie%20Posters/Night%20On%20Sixth.png'); }
-.film-card__bg--3 { background-image: url('images/Movie%20Posters/Call%20Me%20Brother.jpg'); }
-.film-card__bg--4 { background-image: url('images/Movie%20Posters/Segs.jpg'); }
-.film-card__bg--5 { background-image: url('images/Movie%20Posters/Crunch%20Time.png'); }
-.film-card__bg--6 { background-image: url('images/Movie%20Posters/7%20Chinese%20Brothers.jpg'); }
-.film-card__bg--7 { background-image: url('images/Movie%20Posters/Somebody%20Up%20There%20Likes%20Me.png'); }
+.film-card__bg--1 { background-image: url('images/Movie%20Posters/Lucky%20Doug.webp'); }
+.film-card__bg--2 { background-image: url('images/Movie%20Posters/Night%20On%20Sixth.webp'); }
+.film-card__bg--3 { background-image: url('images/Movie%20Posters/Call%20Me%20Brother.webp'); }
+.film-card__bg--4 { background-image: url('images/Movie%20Posters/Segs.webp'); }
+.film-card__bg--5 { background-image: url('images/Movie%20Posters/Crunch%20Time.webp'); }
+.film-card__bg--6 { background-image: url('images/Movie%20Posters/7%20Chinese%20Brothers.webp'); }
+.film-card__bg--7 { background-image: url('images/Movie%20Posters/Somebody%20Up%20There%20Likes%20Me.webp'); }
 .film-card__overlay {
   position: absolute;
   inset: 0;
