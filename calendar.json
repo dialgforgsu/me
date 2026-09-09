@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-08T23:11:20.461Z",
+  "updated": "2026-09-09T01:14:50.651Z",
   "shows": [
     {
       "title": "Teenage Dirtbag [Improv]",
@@ -26,19 +26,19 @@
       "url": ""
     },
     {
-      "title": "Y'all We Asian Presents: Group Chat [Improv]",
-      "start": "2026-11-07T02:30:00.000Z",
-      "end": "2026-11-07T03:30:00.000Z",
-      "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
-      "description": "<a href=\"https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489\">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>",
-      "url": ""
-    },
-    {
       "title": "Teenage Dirtbag [Improv]",
       "start": "2026-11-26T02:30:00.000Z",
       "end": "2026-11-26T04:00:00.000Z",
       "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
       "description": "<a href=\"https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277\">https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277</a>",
+      "url": ""
+    },
+    {
+      "title": "Y'all We Asian Presents: Group Chat [Improv]",
+      "start": "2026-12-05T02:30:00.000Z",
+      "end": "2026-12-05T03:30:00.000Z",
+      "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
+      "description": "<a href=\"https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489\">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>",
       "url": ""
     }
   ]
