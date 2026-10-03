@@ -1,10 +1,5 @@
 # G-Su Paek — Calendar Cache
-_Last updated: 2026-10-01T09:15:43.650Z_
-
-## Y'all We Asian Presents: Group Chat [Improv]
-- **Date:** Oct 3, 2026 at 1:30 AM
-- **Venue:** Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA
-- **Details:** <a href="https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>
+_Last updated: 2026-10-03T06:57:08.167Z_
 
 ## Teenage Dirtbag [Improv]
 - **Date:** Oct 29, 2026 at 1:30 AM
@@ -25,3 +20,8 @@ _Last updated: 2026-10-01T09:15:43.650Z_
 - **Date:** Dec 31, 2026 at 2:30 AM
 - **Venue:** Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA
 - **Details:** <a href="https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277">https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277</a>
+
+## Y'all We Asian Presents: Group Chat [Improv]
+- **Date:** Jan 2, 2027 at 2:30 AM
+- **Venue:** Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA
+- **Details:** <a href="https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>
