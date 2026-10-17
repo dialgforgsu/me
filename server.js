@@ -78,7 +78,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
 
 // ── POST /api/contact ───────────────────────────────────────────────────
 app.post('/api/contact', async (req, res) => {
