@@ -4,6 +4,9 @@
 # Dependencies
 node_modules/
 
+# Local data
+contacts.db
+
 
 # Logs
 *.log
