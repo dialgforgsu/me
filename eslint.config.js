@@ -14,6 +14,8 @@ module.exports = [
         safeUrl:         'readonly', // utils.js
         TICKET_URLS:     'readonly', // utils.js
         resolveTicketUrl: 'readonly', // utils.js
+        loadVisitCount:  'readonly', // utils.js
+        COUNTER_CONFIG:  'readonly', // utils.js
       },
       ecmaVersion: 2021,
       sourceType: 'script',
@@ -31,6 +33,6 @@ module.exports = [
     },
   },
   {
-    ignores: ['node_modules/', 'package-lock.json', 'calendar.json'],
+    ignores: ['node_modules/', 'package-lock.json', 'calendar.json', 'hotpot.json'],
   },
 ];

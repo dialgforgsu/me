@@ -63,12 +63,9 @@ function parseICS(text) {
 
 // ── Diff ──────────────────────────────────────────────────────────────────────
 
-function showKey(s) { return `${s.title}|${s.start}`; }
-
+// Compares every published field, so venue/time/link edits are picked up too.
 function hasChanges(existing, fresh) {
-  if (existing.length !== fresh.length) return true;
-  const existKeys = new Set(existing.map(showKey));
-  return fresh.some(s => !existKeys.has(showKey(s)));
+  return JSON.stringify(existing) !== JSON.stringify(fresh);
 }
 
 // ── Write calendar.md ─────────────────────────────────────────────────────────
@@ -125,10 +122,10 @@ async function main() {
   const fresh   = parseICS(icsText);
   const updated = new Date().toISOString();
 
+  // Leave the files untouched when nothing changed, so the workflow has nothing
+  // to commit (rewriting only the timestamp used to create a commit every run).
   if (!hasChanges(existing.shows || [], fresh)) {
-    console.log('[calendar] No changes — updating timestamp only.');
-    existing.updated = updated;
-    fs.writeFileSync(CALENDAR_JSON, JSON.stringify(existing, null, 2), 'utf8');
+    console.log('[calendar] No changes.');
     return;
   }
 

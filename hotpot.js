@@ -1,38 +1,17 @@
 'use strict';
 
-// Hot Pot Comedy — YouTube RSS video gallery
+// Hot Pot Comedy — YouTube video gallery
 (async function () {
   const container  = document.getElementById('hpcVideos');
-  const CHANNEL_ID = 'UCFVYOfmUZd03OLl4oRBI5Yg';
-  const RSS_URL    = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
   let allEntries   = [];
 
-  function parseRSS(text) {
-    const entryRx     = /<entry>([\s\S]*?)<\/entry>/g;
-    const videoIdRx   = /<yt:videoId>([^<]+)<\/yt:videoId>/;
-    const titleRx     = /<title>([^<]+)<\/title>/;
-    const publishedRx = /<published>([^<]+)<\/published>/;
-    const results = [];
-    let m;
-    while ((m = entryRx.exec(text)) !== null) {
-      const block     = m[1];
-      const videoId   = (videoIdRx.exec(block)  || [])[1] || '';
-      const title     = (titleRx.exec(block)     || [])[1] || '';
-      const published = (publishedRx.exec(block) || [])[1] || '';
-      if (videoId && /^[\w-]{5,20}$/.test(videoId)) results.push({ videoId, title, published });
-    }
-    return results;
-  }
-
-  async function fetchFeed() {
-    try {
-      const res = await fetch(RSS_URL);
-      if (res.ok) return await res.text();
-    } catch (_) {}
-    const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(RSS_URL);
-    const res = await fetch(proxy);
-    if (!res.ok) throw new Error('proxy');
-    return await res.text();
+  // Videos come from hotpot.json, refreshed by a GitHub Actions job (update-videos.js).
+  async function fetchVideos() {
+    const res = await fetch('hotpot.json?_=' + Date.now());
+    if (!res.ok) throw new Error('hotpot.json');
+    const data = await res.json();
+    return (Array.isArray(data.videos) ? data.videos : [])
+      .filter(v => v && /^[\w-]{5,20}$/.test(v.videoId));
   }
 
   // escHtml comes from utils.js, loaded before this script.
@@ -46,13 +25,8 @@
       const date  = new Date(v.published).toLocaleDateString('en-US', {
         year: 'numeric', month: 'short', day: 'numeric',
       });
-      // v.title comes from the RSS XML already HTML-escaped (e.g. "&amp;");
-      // decode entities to get the plain title, then re-escape for safe HTML insertion.
-      const plainTitle = v.title
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>');
-      const title = escHtml(plainTitle);
+      // Titles in hotpot.json are plain text; escape for HTML insertion.
+      const title = escHtml(v.title || '');
       return `<div class="hpc-video">
         <div class="hpc-video__embed">
           <iframe
@@ -80,8 +54,7 @@
   });
 
   try {
-    const text = await fetchFeed();
-    allEntries = parseRSS(text);
+    allEntries = await fetchVideos();
     if (!allEntries.length) {
       container.innerHTML = '<div class="hpc-error">No videos found.</div>';
       return;

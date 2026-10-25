@@ -4,9 +4,6 @@
 # Dependencies
 node_modules/
 
-# Runtime data
-contacts.db
-*.db-journal
 
 # Logs
 *.log
