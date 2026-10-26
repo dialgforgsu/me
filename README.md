@@ -8,14 +8,14 @@ Source for [gsupaek.com](https://gsupaek.com). Actor, improviser, tech guy.
 |-------|------|
 | Pages | Vanilla HTML/CSS/JS |
 | Calendar | Google Calendar ICS → GitHub Actions cron → `calendar.json` |
-| Hot Pot videos | YouTube RSS → GitHub Actions cron → `hotpot.json` |
+| Hot Pot videos | YouTube Data API (or RSS fallback) → GitHub Actions cron → `hotpot.json` |
 | Contact form | Formspree |
 | Visitor counter | Supabase (anonymous page-view RPC) |
 | Hosting | GitHub Pages |
 
 ## Calendar sync
 
-A GitHub Actions workflow runs every 15 minutes, fetches the private Google Calendar ICS, expands recurring events, and commits the top 5 upcoming shows to `calendar.json` only when a show changed. The same job refreshes `hotpot.json` from the Hot Pot Comedy YouTube feed.
+A GitHub Actions workflow runs every 15 minutes, fetches the private Google Calendar ICS, expands recurring events, and commits the top 5 upcoming shows to `calendar.json` only when a show changed. The same job refreshes `hotpot.json` from the Hot Pot Comedy uploads, using the YouTube Data API when the `YOUTUBE_API_KEY` secret is set and the channel's RSS feed otherwise.
 
 Everything on that calendar (titles, venues, descriptions) for the next 5 events is published, so keep it shows-only.
 

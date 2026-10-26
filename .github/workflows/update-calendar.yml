@@ -16,11 +16,11 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - run: npm ci
@@ -33,11 +33,16 @@ jobs:
       # A YouTube hiccup shouldn't block the calendar commit.
       - name: Run Hot Pot video updater
         continue-on-error: true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: node update-videos.js
 
       - name: Commit changes if any
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add calendar.json calendar.md hotpot.json
+          # hotpot.json doesn't exist until the video updater first succeeds.
+          for f in calendar.json hotpot.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
           git diff --cached --quiet && echo "No changes" || (git commit -m "chore: update calendar/video cache" && git push)

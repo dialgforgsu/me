@@ -3,8 +3,9 @@
 
 /**
  * update-videos.js
- * Fetches the Hot Pot Comedy YouTube RSS feed and writes hotpot.json,
- * so the browser loads videos same-origin instead of via a CORS proxy.
+ * Fetches the Hot Pot Comedy uploads and writes hotpot.json, so the browser
+ * loads videos same-origin instead of via a CORS proxy.
+ * Uses the YouTube Data API when YOUTUBE_API_KEY is set, otherwise the RSS feed.
  * Writes only when the video list changes.
  *
  * Usage: node update-videos.js   (also run by .github/workflows/update-calendar.yml)
@@ -18,6 +19,9 @@ const CHANNEL_ID = 'UCFVYOfmUZd03OLl4oRBI5Yg';
 const FEED_URL =
   process.env.HOTPOT_FEED_URL ||
   `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+// A channel's uploads playlist ID is its channel ID with UC swapped for UU.
+const UPLOADS_PLAYLIST_ID = 'UU' + CHANNEL_ID.slice(2);
+const API_KEY = process.env.YOUTUBE_API_KEY;
 const OUT = path.join(__dirname, 'hotpot.json');
 
 function decodeXml(s) {
@@ -45,10 +49,30 @@ function parseFeed(xml) {
   return videos;
 }
 
-async function main() {
+async function fetchFromFeed() {
   const res = await fetch(FEED_URL, { headers: { 'User-Agent': 'gsupaek-video-updater/1.0' } });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const videos = parseFeed(await res.text());
+  if (!res.ok) throw new Error(`feed HTTP ${res.status}`);
+  return parseFeed(await res.text());
+}
+
+async function fetchFromApi() {
+  const url =
+    'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50' +
+    `&playlistId=${UPLOADS_PLAYLIST_ID}&key=${encodeURIComponent(API_KEY)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`API HTTP ${res.status}`);
+  const data = await res.json();
+  return (data.items || [])
+    .map((item) => ({
+      videoId: item.contentDetails.videoId,
+      title: item.snippet.title,
+      published: item.contentDetails.videoPublishedAt || item.snippet.publishedAt,
+    }))
+    .filter((v) => /^[\w-]{5,20}$/.test(v.videoId) && v.title !== 'Private video');
+}
+
+async function main() {
+  const videos = API_KEY ? await fetchFromApi() : await fetchFromFeed();
   if (!videos.length) throw new Error('feed had no videos; keeping existing hotpot.json');
 
   let existing = null;
