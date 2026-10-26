@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T22:17:51.162Z",
+  "updated": "2026-10-26T04:09:03.142Z",
   "shows": [
     {
       "title": "Teenage Dirtbag [Improv]",
@@ -10,7 +10,15 @@
       "url": ""
     },
     {
-      "title": "YWA OOB Show",
+      "title": "YWA x AAAFF Show (time tbd)",
+      "start": "2026-11-06T00:00:00.000Z",
+      "end": "2026-11-06T01:00:00.000Z",
+      "location": "Asian American Resource Center\n8401 Cameron Rd, Austin, TX  78754, United States",
+      "description": "",
+      "url": ""
+    },
+    {
+      "title": "Y'all We Asian @ Out Of Bounds Comedy Festival [Improv]",
       "start": "2026-11-08T00:00:00.000Z",
       "end": "2026-11-08T01:00:00.000Z",
       "location": "Dougherty Arts Center\n1110 Barton Springs Rd, Austin, TX  78704, United States",
@@ -31,14 +39,6 @@
       "end": "2026-12-05T03:30:00.000Z",
       "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
       "description": "<a href=\"https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489\">https://www.eventbrite.com/e/yall-we-asian-hot-stories-hotter-comedy-tickets-162922468489</a>",
-      "url": ""
-    },
-    {
-      "title": "Die Hard Radio Play",
-      "start": "2026-12-23T01:30:00.000Z",
-      "end": "2026-12-23T02:30:00.000Z",
-      "location": "The Driskill - The Unbound Collection by Hyatt, 604 Brazos St, Austin, TX 78701, USA",
-      "description": "<a href=\"https://www.penfoldtheatre.org/on-stage/event-calendar/?eid=193610\">https://www.penfoldtheatre.org/on-stage/event-calendar/?eid=193610</a>",
       "url": ""
     }
   ]
