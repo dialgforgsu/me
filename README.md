@@ -1,6 +1,6 @@
 # G-Su Paek — Personal Site
 
-Source for [gsupaek.com](https://gsupaek.com). Actor, improviser, tech guy.
+Source for [gsupaek.com](https://www.gsupaek.com). Actor, improviser, tech guy.
 
 ## Stack
 

@@ -140,7 +140,8 @@ async function loadShows(forceRefresh) {
     return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   }
 
-  function renderShows(shows) {
+  function renderShows(allShows) {
+    const shows = upcomingShows(allShows);
     [
       { id: 'improv-ticket-ywa', match: /y.?all we asian/i },
       { id: 'improv-ticket-tdb', match: /teenage dirtbag/i },
@@ -171,7 +172,7 @@ async function loadShows(forceRefresh) {
         + `&details=${encodeURIComponent(show.description)}`;
       const ticketUrl = safeUrl(resolveTicketUrl(show));
       const plainDesc = show.description ? show.description.replace(/<[^>]*>/g, '').trim() : '';
-      const sub       = plainDesc && !/^https?:\/\//.test(plainDesc) ? escHtml(plainDesc.split(/[\n\\n]/)[0]) : '';
+      const sub       = plainDesc && !/^https?:\/\//.test(plainDesc) ? escHtml(plainDesc.split(/\n|\\n/)[0]) : '';
       return `<div class="show__card">
         <div class="show__card-date">
           <span class="show__month">${month}</span>

@@ -39,6 +39,13 @@ function resolveTicketUrl(show) {
   return '';
 }
 
+// Drops shows that have already ended; calendar.json and the localStorage cache
+// can lag behind the real calendar.
+function upcomingShows(shows) {
+  var now = Date.now();
+  return shows.filter(function (s) { return new Date(s.end || s.start).getTime() > now; });
+}
+
 // Visitor counter (Supabase RPC). The anon key is public by design; the database
 // only exposes the counter functions to it. To move the counter to another
 // project, change these two values (see supabase/README.md).

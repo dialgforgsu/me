@@ -3,15 +3,13 @@
 // Visitor counter (loadVisitCount lives in utils.js)
 loadVisitCount(document.getElementById('visit-text'), document.getElementById('visit-count'));
 
-// Theme toggle
+// Theme toggle (the saved theme is applied in <head> by theme.js)
 const html        = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
-const saved       = localStorage.getItem('gsupaek_theme') || 'dark';
-html.setAttribute('data-theme', saved);
 themeToggle.addEventListener('click', () => {
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
-  localStorage.setItem('gsupaek_theme', next);
+  try { localStorage.setItem('gsupaek_theme', next); } catch (_) { /* storage blocked */ }
 });
 
 // Nav: scroll state

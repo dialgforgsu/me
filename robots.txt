@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /privacy.html
 
-Sitemap: https://gsupaek.com/sitemap.xml
+Sitemap: https://www.gsupaek.com/sitemap.xml

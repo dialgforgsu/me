@@ -47,16 +47,19 @@
   }
 
   // ── Shows (reads from script.js localStorage cache or calendar.json) ──
+  var SHOWS_CACHE_TTL = 15 * 60 * 1000; // same as script.js
+
   function getShows() {
     try {
       var cached = JSON.parse(localStorage.getItem('gsupaek_shows_v3') || 'null');
-      if (cached && Array.isArray(cached.shows) && cached.shows.length) {
-        return Promise.resolve(cached.shows);
+      if (cached && (Date.now() - cached.ts) < SHOWS_CACHE_TTL &&
+          Array.isArray(cached.shows) && cached.shows.length) {
+        return Promise.resolve(upcomingShows(cached.shows));
       }
     } catch (_) { /* storage blocked */ }
     return fetch('calendar.json?_=' + Date.now())
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) { return (d && Array.isArray(d.shows)) ? d.shows : []; })
+      .then(function (d) { return (d && Array.isArray(d.shows)) ? upcomingShows(d.shows) : []; })
       .catch(function () { return []; });
   }
 

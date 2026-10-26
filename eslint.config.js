@@ -14,6 +14,7 @@ module.exports = [
         safeUrl:         'readonly', // utils.js
         TICKET_URLS:     'readonly', // utils.js
         resolveTicketUrl: 'readonly', // utils.js
+        upcomingShows:   'readonly', // utils.js
         loadVisitCount:  'readonly', // utils.js
         COUNTER_CONFIG:  'readonly', // utils.js
       },
