@@ -2130,35 +2130,6 @@ body, .nav, .improv__card, .podcast__card, .press, .footer,
 .chatbot__toggle--open .chatbot__toggle-icon--chat  { opacity: 0; transform: rotate(90deg); }
 .chatbot__toggle--open .chatbot__toggle-icon--close { opacity: 1; transform: rotate(0); }
 
-/* ── Notification Badge ── */
-.chatbot__badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #e74c3c;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--dark);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  animation: chatbot-badge-pulse 2s 1.5s ease-in-out 3;
-}
-.chatbot__badge--hidden {
-  opacity: 0;
-  transform: scale(0);
-  pointer-events: none;
-}
-@keyframes chatbot-badge-pulse {
-  0%, 100% { transform: scale(1);    }
-  50%       { transform: scale(1.25); }
-}
-
 /* ── Window ── */
 .chatbot__window {
   position: absolute;
@@ -2636,6 +2607,6 @@ body, .nav, .improv__card, .podcast__card, .press, .footer,
 
 @media (prefers-reduced-motion: reduce) {
   .chatbot__toggle, .chatbot__window, .chatbot__form-panel,
-  .chatbot__toggle-icon, .chatbot__badge { transition: none; animation: none; }
+  .chatbot__toggle-icon { transition: none; animation: none; }
   .chatbot__bubble--typing span { animation: none; opacity: 0.6; }
 }

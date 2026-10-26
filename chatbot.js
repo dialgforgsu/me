@@ -70,7 +70,7 @@
 
   // ── DOM refs (populated in buildDOM) ───────────────────
   var toggleEl, windowEl, messagesEl, inputEl, sendBtnEl,
-      menuBtnEl, formPanelEl, formBackEl, badgeEl;
+      menuBtnEl, formPanelEl, formBackEl;
 
   // ── Build DOM ───────────────────────────────────────────
   function buildDOM() {
@@ -81,7 +81,6 @@
       '<button class="chatbot__toggle" id="chatbotToggle" aria-label="Chat with G-Su\'s assistant" aria-expanded="false">' +
         '<svg class="chatbot__toggle-icon chatbot__toggle-icon--chat" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
         '<svg class="chatbot__toggle-icon chatbot__toggle-icon--close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
-        '<span class="chatbot__badge" id="chatbotBadge" aria-hidden="true">1</span>' +
       '</button>' +
 
       '<div class="chatbot__window" id="chatbotWindow" role="dialog" aria-label="Chat with G-Su\'s assistant" aria-hidden="true">' +
@@ -158,7 +157,6 @@
     menuBtnEl  = document.getElementById('chatbotMenuBtn');
     formPanelEl = document.getElementById('chatbotFormPanel');
     formBackEl  = document.getElementById('chatbotFormBack');
-    badgeEl     = document.getElementById('chatbotBadge');
   }
 
   // ── Message Helpers ─────────────────────────────────────
@@ -490,7 +488,6 @@
     windowEl.setAttribute('aria-hidden', 'false');
     toggleEl.setAttribute('aria-expanded', 'true');
     toggleEl.classList.add('chatbot__toggle--open');
-    badgeEl.classList.add('chatbot__badge--hidden');
 
     if (!hasGreeted) {
       hasGreeted = true;
