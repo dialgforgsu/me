@@ -4,7 +4,7 @@
 /**
  * update-calendar.js
  * Fetches the Google Calendar ICS, expands recurring events,
- * and writes calendar.json + calendar.md only when events change.
+ * and writes calendar.json only when events change.
  *
  * Usage:   node update-calendar.js
  * GitHub Actions: runs on schedule via .github/workflows/update-calendar.yml
@@ -19,7 +19,6 @@ const path         = require('path');
 
 const ICS_URL       = process.env.CALENDAR_ICS_URL;
 const CALENDAR_JSON = path.join(__dirname, 'calendar.json');
-const CALENDAR_MD   = path.join(__dirname, 'calendar.md');
 const LOOKAHEAD_MS  = 365 * 24 * 3600 * 1000; // 1 year
 const MAX_SHOWS     = 5;
 
@@ -68,35 +67,6 @@ function hasChanges(existing, fresh) {
   return JSON.stringify(existing) !== JSON.stringify(fresh);
 }
 
-// ── Write calendar.md ─────────────────────────────────────────────────────────
-
-function writeMD(shows, updated) {
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const lines  = [
-    '# G-Su Paek — Calendar Cache',
-    `_Last updated: ${updated}_`,
-    '',
-  ];
-
-  if (!shows.length) {
-    lines.push('_No upcoming shows._');
-  } else {
-    shows.forEach(s => {
-      const d    = new Date(s.start);
-      const date = `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
-      const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'UTC' });
-      lines.push(`## ${s.title}`);
-      lines.push(`- **Date:** ${date} at ${time}`);
-      if (s.location)    lines.push(`- **Venue:** ${s.location}`);
-      if (s.url)         lines.push(`- **Tickets:** ${s.url}`);
-      if (s.description) lines.push(`- **Details:** ${s.description.split('\n')[0]}`);
-      lines.push('');
-    });
-  }
-
-  fs.writeFileSync(CALENDAR_MD, lines.join('\n'), 'utf8');
-}
-
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -122,7 +92,7 @@ async function main() {
   const fresh   = parseICS(icsText);
   const updated = new Date().toISOString();
 
-  // Leave the files untouched when nothing changed, so the workflow has nothing
+  // Leave the file untouched when nothing changed, so the workflow has nothing
   // to commit (rewriting only the timestamp used to create a commit every run).
   if (!hasChanges(existing.shows || [], fresh)) {
     console.log('[calendar] No changes.');
@@ -131,7 +101,6 @@ async function main() {
 
   const data = { updated, shows: fresh };
   fs.writeFileSync(CALENDAR_JSON, JSON.stringify(data, null, 2), 'utf8');
-  writeMD(fresh, updated);
 
   console.log(`[calendar] Updated — ${fresh.length} show(s):`);
   fresh.forEach(s => console.log(`  • ${s.title} (${s.start})`));

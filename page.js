@@ -1,7 +1,7 @@
 'use strict';
 
 // Visitor counter (loadVisitCount lives in utils.js)
-loadVisitCount(document.getElementById('visit-text'));
+loadVisitCount(document.getElementById('visit-text'), document.getElementById('visit-count'));
 
 // Theme toggle
 const html        = document.documentElement;

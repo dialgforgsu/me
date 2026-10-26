@@ -1331,31 +1331,6 @@ ul { list-style: none; }
   border-color: rgba(0,0,0,0.1);
 }
 
-/* ── Newsletter form inside show card ── */
-.newsletter-form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-}
-.newsletter-input {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: var(--white);
-  font-family: var(--font-body);
-  font-size: 13px;
-  padding: 9px 12px;
-  outline: none;
-  transition: border-color 0.2s, background 0.2s;
-  width: 100%;
-}
-.newsletter-input:focus {
-  border-color: var(--accent);
-  background: rgba(255,255,255,0.12);
-}
-.newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
-.newsletter-form .btn { width: 100%; justify-content: center; }
-
 /* ============================================
    SHOWS
    ============================================ */
@@ -2047,15 +2022,6 @@ button:focus:not(:focus-visible) { outline: none; }
 }
 [data-theme="light"] .contact--photo-bg .form__input::placeholder { color: rgba(255,255,255,0.25); }
 [data-theme="light"] .contact--photo-bg .form__select option { background: #1a1a1a; color: #fff; }
-
-/* Newsletter form in light mode (show card is light bg) */
-[data-theme="light"] .newsletter-input {
-  background: rgba(0,0,0,0.05);
-  border-color: rgba(0,0,0,0.15);
-  color: #111;
-}
-[data-theme="light"] .newsletter-input:focus { border-color: var(--accent); }
-[data-theme="light"] .newsletter-input::placeholder { color: rgba(0,0,0,0.3); }
 
 /* Improv card thumbnail — keep dark regardless of theme */
 [data-theme="light"] .improv__card-thumb { background: #1a1a1a; border-color: rgba(0,0,0,0.2); }

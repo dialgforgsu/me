@@ -53,7 +53,7 @@
       if (cached && Array.isArray(cached.shows) && cached.shows.length) {
         return Promise.resolve(cached.shows);
       }
-    } catch (e) {}
+    } catch (_) { /* storage blocked */ }
     return fetch('calendar.json?_=' + Date.now())
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) { return (d && Array.isArray(d.shows)) ? d.shows : []; })
