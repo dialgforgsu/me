@@ -1,6 +1,14 @@
 {
-  "updated": "2026-11-12T16:16:25.285Z",
+  "updated": "2026-11-16T16:26:39.064Z",
   "shows": [
+    {
+      "title": "Teenage Dirtbag [Improv]",
+      "start": "2026-11-23T01:00:00.000Z",
+      "end": "2026-11-23T01:30:00.000Z",
+      "location": "Fallout Theater, 616 Lavaca St, Austin, TX 78701, USA",
+      "description": "<a href=\"https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277\" target=\"_blank\"><u>https://www.eventbrite.com/e/teenage-dirtbag-nostalgia-fueled-improv-comedy-tickets-415633931277</u></a>",
+      "url": ""
+    },
     {
       "title": "Y'all We Asian Presents: Group Chat [Improv]",
       "start": "2026-12-05T02:30:00.000Z",
@@ -29,14 +37,6 @@
       "title": "Your Old Fashioned Die Hard Holiday Radiocast",
       "start": "2026-12-24T01:30:00.000Z",
       "end": "2026-12-24T02:30:00.000Z",
-      "location": "The Driskill - The Unbound Collection by Hyatt, 604 Brazos St, Austin, TX 78701, USA",
-      "description": "<a href=\"https://www.penfoldtheatre.org/on-stage/event-calendar/?eid=193610\">https://www.penfoldtheatre.org/on-stage/event-calendar/?eid=193610</a>",
-      "url": ""
-    },
-    {
-      "title": "Your Old Fashioned Die Hard Holiday Radiocast",
-      "start": "2026-12-24T04:00:00.000Z",
-      "end": "2026-12-24T05:00:00.000Z",
       "location": "The Driskill - The Unbound Collection by Hyatt, 604 Brazos St, Austin, TX 78701, USA",
       "description": "<a href=\"https://www.penfoldtheatre.org/on-stage/event-calendar/?eid=193610\">https://www.penfoldtheatre.org/on-stage/event-calendar/?eid=193610</a>",
       "url": ""
